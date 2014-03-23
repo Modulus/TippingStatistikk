@@ -1,7 +1,6 @@
 #Intellij
 .idea
-.iml
-.git
+*.iml
 
 #Python
-.pyc
+*.pyc
