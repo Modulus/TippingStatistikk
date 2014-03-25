@@ -1,5 +1,7 @@
+from collections import Counter
 from datetime import datetime
 import json
+import operator
 
 __author__ = 'Modulus'
 import urllib2
@@ -18,6 +20,15 @@ def run():
     numbers = {}
     for index, value in enumerate(lists[1]):
         numbers[index+1] = value
+
+    # elements = dict(sorted(numbers.iteritems(), key=operator.itemgetter(0), reverse=True)[0:5])
+
+    counter = Counter(numbers)
+
+    #Highest values
+    print counter.most_common(6)
+
+    print max(lists[1])
 
     print numbers
 
