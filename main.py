@@ -1,14 +1,9 @@
-from collections import Counter
 from datetime import datetime
-import json
-import operator
+from itertools import permutations
 
 __author__ = 'Modulus'
-import urllib2
 
-
-def dateformat():
-    return "%d.%m.%Y"
+from utilities.number_extractor import extract, extract_permuatations
 
 
 def run():
@@ -16,42 +11,17 @@ def run():
 
     current_date = datetime.now()
 
-    lists = generate_lists(start_date.strftime(dateformat()), current_date.strftime(dateformat()))
-    numbers = {}
-    for index, value in enumerate(lists[1]):
-        numbers[index+1] = value
+    numbers = extract(7, start_date, current_date)
+    print(numbers)
 
-    # elements = dict(sorted(numbers.iteritems(), key=operator.itemgetter(0), reverse=True)[0:5])
+    extracted_uniques = []
+    for permutation in extract_permuatations(7, 10, start_date, current_date):
+        sorted_values = sorted(permutation)
+        if not sorted_values in extracted_uniques:
+            extracted_uniques.append(sorted_values)
 
-    counter = Counter(numbers)
-
-    #Highest values
-    print counter.most_common(6)
-
-    print max(lists[1])
-
-    print numbers
-
-
-def generate_lists(start_date, end_date):
-    base_url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsVikingLotto.htm?fromDate={0}&toDate={1}&".format(start_date, end_date)
-
-    url = urllib2.urlopen(base_url)
-
-    content = url.readlines()
-
-    """
-    The first array has the actual numbers,
-    The second array is amount of times this number has been selected
-    The third array is how many times this number has been additional numbers
-    """
-
-    for line in content:
-        if "var sta_dataTable" in line:
-            json_array = line.split("=")[1]
-            json_array = json_array.replace(";", "")
-            return json.loads(json_array)
-
+    for value in extracted_uniques:
+        print(value)
 
 if __name__ == "__main__":
     run()

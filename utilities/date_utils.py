@@ -7,7 +7,8 @@ __author__ = 'Modulus'
 
 class DateUtils(object):
 
-    def get_dates(self, start_date, end_date=datetime.now()):
+    @staticmethod
+    def get_dates(start_date, end_date=datetime.now()):
         dates = []
         if start_date == datetime.today():
             dates.append(datetime.now())

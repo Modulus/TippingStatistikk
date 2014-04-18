@@ -11,10 +11,9 @@ class MainTests(TestCase):
     def setUp(self):
         self.start = datetime.date(datetime(1986, 01, 01))
         self.end = datetime.date(datetime(2014, 03, 24))
-        self.util = DateUtils()
 
     def test_timedelta(self):
-        dates = self.util.get_dates(self.start)
+        dates = DateUtils.get_dates(self.start)
         self.assertIsNotNone(dates)
         self.assertNotEquals([], dates)
         self.assertEquals(9, len(dates))
