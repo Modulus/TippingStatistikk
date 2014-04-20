@@ -3,7 +3,7 @@ import json
 import urllib2
 from itertools import permutations
 
-__author__ = 'JohnSigvald'
+__author__ = 'Modulus'
 
 
 def generate_lists(start_date, end_date):
@@ -38,7 +38,7 @@ def extract(amount, start_date, end_date):
     lists = generate_lists(start_date.strftime(dateformat()), end_date.strftime(dateformat()))
     numbers = {}
     for index, value in enumerate(lists[1]):
-        numbers[index + 1] =+ value
+        numbers[index + 1] = value
 
     counter = Counter(numbers)
 
