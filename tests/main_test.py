@@ -1,3 +1,4 @@
+from collections import Counter
 from datetime import datetime
 from unittest import TestCase
 from mock import MagicMock
@@ -15,7 +16,7 @@ class MainTest(TestCase):
              [49, 45, 38, 51, 47, 50, 53, 40, 44, 56, 60, 49, 60, 48, 43, 41, 47, 48, 49, 46, 42, 48, 46, 53, 43, 50, 51
                  , 45, 42, 62, 49, 49, 50, 49, 37, 35, 31, 49, 51, 42, 48, 46, 49, 43, 33, 29, 28, 30]]
 
-    def test_x(self):
+    def test_extract(self):
         start_date = datetime.date(datetime(1986, 01, 01))
 
         current_date = datetime.date(datetime(2014, 04, 19))
@@ -23,4 +24,16 @@ class MainTest(TestCase):
         extractor.generate_lists = MagicMock(return_value=self.lists)
         numbers = extractor.extract(7, start_date, current_date)
 
-        self.assertListEqual([2,41,27,3,42,44,36], numbers)
+        self.assertListEqual([2, 41, 27, 3, 42, 44, 36], numbers)
+
+    def test_most_common(self):
+        data = {1: 300, 2: 1, 4: 200, 7: 150, 1000: 23, 9999: 87, 999123992: 123}
+        counter = Counter(data)
+        result = counter.most_common(3)
+
+        elements = []
+
+        for element in result:
+            elements.append(element[0])
+
+        self.assertEquals([1, 4, 7], elements)
