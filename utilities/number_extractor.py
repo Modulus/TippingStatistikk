@@ -6,16 +6,13 @@ from itertools import permutations
 __author__ = 'Modulus'
 
 
-def generate_lists(start_date, end_date):
-    base_url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsVikingLotto.htm?fromDate={0}&toDate={1}&".format(
-        start_date, end_date)
-    # base_url =  "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsLotto.htm?fromDate={0}&toDate={1}&".format(start_date, end_date)
-    # base_url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsExtra.htm?fromDate={0}&toDate={1}&".format(start_date, end_date)
-    # base_url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsKeno.htm?fromDate={0}&toDate={1}&".format(start_date, end_date)
+def generate_lists(start_date, end_date, url):
 
-    url = urllib2.urlopen(base_url)
+    base_url = url + "fromDate={0}&toDate={1}&".format(start_date, end_date)
 
-    content = url.readlines()
+    stream = urllib2.urlopen(base_url)
+
+    content = stream.readlines()
 
     """
     The first array has the actual numbers,
