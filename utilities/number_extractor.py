@@ -3,11 +3,13 @@ import json
 import urllib2
 from itertools import permutations
 
+from utilities.date_utils import dateformat
+
+
 __author__ = 'Modulus'
 
 
 def generate_lists(start_date, end_date, url):
-
     base_url = url + "?fromDate={0}&toDate={1}&".format(start_date, end_date)
 
     stream = urllib2.urlopen(base_url)
@@ -27,11 +29,8 @@ def generate_lists(start_date, end_date, url):
             return json.loads(json_array)
 
 
-def dateformat():
-    return "%d.%m.%Y"
-
-
 def extract(amount, start_date, end_date, url):
+    """This function extract all the chosen amounts of most common numbers from the given url"""
     lists = generate_lists(start_date=start_date.strftime(dateformat()),
                            end_date=end_date.strftime(dateformat()), url=url)
     numbers = {}
@@ -43,20 +42,15 @@ def extract(amount, start_date, end_date, url):
     """Extract the actual numbers and return them"""
     return [e[0] for e in counter.most_common(amount)]
 
-"""Get the name of the current game beeing displayed"""
-def get_name(url):
-    if url:
-        elements = url.split("/")
-        page = elements[-1]
 
-        """ Remove prefix and suffix (.htm)"""
-        name = page[len("getNumberStatistics"):-4]
-
-        return name
-    else:
-        return None
-
-def extract_permuatations(length, amount, start_date, end_date, url):
+def extract_permutations(length, amount, start_date, end_date, url):
+    """This functions will return all position permutations of the url given
+        amount will be the count of numbers per resulting row in extracted data to be used for
+        generating permutations.
+        length will be the length of each row in the finished permutation.
+        Keep in mind that repeating permutations will occur, since it is based on positions and not
+        values.
+    """
     all_numbers = extract(amount, start_date, end_date, url)
 
     perm = permutations(all_numbers, length)
@@ -65,6 +59,8 @@ def extract_permuatations(length, amount, start_date, end_date, url):
 
 
 def extract_uniques(data):
+    """This function is unused on the extracted permutations to extract all the unique values in
+    the permutation. Since repetition will happen, because of its based on position and not value"""
     if data and type(data) == permutations:
         extracted_uniques = []
         for element in data:

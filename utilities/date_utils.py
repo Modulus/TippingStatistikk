@@ -32,3 +32,7 @@ class DateUtils(object):
             dates.extend(new_dates)
 
         return dates
+
+
+def dateformat():
+    return "%d.%m.%Y"

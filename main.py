@@ -3,7 +3,7 @@ from itertools import permutations
 
 __author__ = 'Modulus'
 
-from utilities.number_extractor import extract_permuatations, extract_uniques, get_name
+from utilities.number_extractor import extract_permutations, extract_uniques, get_name
 
 
 def run():
@@ -22,7 +22,7 @@ def run():
 
         print(" {0} numbers".format(get_name(url)))
 
-        permutations = extract_permuatations(7, 8, start_date, current_date, url)
+        permutations = extract_permutations(7, 8, start_date, current_date, url)
 
         values = extract_uniques(permutations)
 
