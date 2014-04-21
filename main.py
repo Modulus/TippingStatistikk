@@ -3,7 +3,7 @@ from itertools import permutations
 
 __author__ = 'Modulus'
 
-from utilities.number_extractor import extract_permuatations, extract_uniques
+from utilities.number_extractor import extract_permuatations, extract_uniques, get_name
 
 
 def run():
@@ -19,14 +19,8 @@ def run():
     ]
 
     for index, url in enumerate(urls):
-        if index == 0:
-            print("Lotto numbers")
-        elif index == 1:
-            print("Viking lotto numbers")
-        elif index == 2:
-            print("Extra numbers")
-        else:
-            print("Keno numbers")
+
+        print(" {0} numbers".format(get_name(url)))
 
         permutations = extract_permuatations(7, 8, start_date, current_date, url)
 

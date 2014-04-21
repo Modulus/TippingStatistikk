@@ -43,6 +43,18 @@ def extract(amount, start_date, end_date, url):
     """Extract the actual numbers and return them"""
     return [e[0] for e in counter.most_common(amount)]
 
+"""Get the name of the current game beeing displayed"""
+def get_name(url):
+    if url:
+        elements = url.split("/")
+        page = elements[-1]
+
+        """ Remove prefix and suffix (.htm)"""
+        name = page[len("getNumberStatistics"):-4]
+
+        return name
+    else:
+        return None
 
 def extract_permuatations(length, amount, start_date, end_date, url):
     all_numbers = extract(amount, start_date, end_date, url)
