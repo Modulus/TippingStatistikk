@@ -8,7 +8,7 @@ __author__ = 'Modulus'
 
 def generate_lists(start_date, end_date, url):
 
-    base_url = url + "fromDate={0}&toDate={1}&".format(start_date, end_date)
+    base_url = url + "?fromDate={0}&toDate={1}&".format(start_date, end_date)
 
     stream = urllib2.urlopen(base_url)
 
@@ -31,27 +31,35 @@ def dateformat():
     return "%d.%m.%Y"
 
 
-def extract(amount, start_date, end_date):
-    lists = generate_lists(start_date.strftime(dateformat()), end_date.strftime(dateformat()))
+def extract(amount, start_date, end_date, url):
+    lists = generate_lists(start_date=start_date.strftime(dateformat()),
+                           end_date=end_date.strftime(dateformat()), url=url)
     numbers = {}
     for index, value in enumerate(lists[1]):
         numbers[index + 1] = value
 
     counter = Counter(numbers)
 
-    print counter.most_common(amount)
-
-    print max(lists[1])
-
     """Extract the actual numbers and return them"""
     return [e[0] for e in counter.most_common(amount)]
 
 
-def extract_permuatations(length, amount, start_date, end_date):
-    all_numbers = extract(amount, start_date, end_date)
+def extract_permuatations(length, amount, start_date, end_date, url):
+    all_numbers = extract(amount, start_date, end_date, url)
 
     perm = permutations(all_numbers, length)
 
     return perm
 
+
+def extract_uniques(data):
+    if data and type(data) == permutations:
+        extracted_uniques = []
+        for element in data:
+            sorted_values = sorted(element)
+            if not sorted_values in extracted_uniques:
+                extracted_uniques.append(sorted_values)
+        return extracted_uniques
+    else:
+        raise TypeError("You need to give itertools.permutations as parameter")
 
