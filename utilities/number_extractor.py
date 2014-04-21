@@ -9,18 +9,18 @@ from utilities.date_utils import dateformat
 __author__ = 'Modulus'
 
 
-def generate_lists(start_date, end_date, url):
-    base_url = url + "?fromDate={0}&toDate={1}&".format(start_date, end_date)
-
-    stream = urllib2.urlopen(base_url)
-
-    content = stream.readlines()
-
+def read_lists(start_date, end_date, url):
     """
     The first array has the actual numbers,
     The second array is amount of times this number has been selected
     The third array is how many times this number has been additional numbers
     """
+
+    base_url = url + "?fromDate={0}&toDate={1}&".format(start_date, end_date)
+
+    stream = urllib2.urlopen(base_url)
+
+    content = stream.readlines()
 
     for line in content:
         if "var sta_dataTable" in line:
@@ -31,7 +31,7 @@ def generate_lists(start_date, end_date, url):
 
 def extract(amount, start_date, end_date, url):
     """This function extract all the chosen amounts of most common numbers from the given url"""
-    lists = generate_lists(start_date=start_date.strftime(dateformat()),
+    lists = read_lists(start_date=start_date.strftime(dateformat()),
                            end_date=end_date.strftime(dateformat()), url=url)
     numbers = {}
     for index, value in enumerate(lists[1]):

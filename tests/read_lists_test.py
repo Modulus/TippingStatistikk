@@ -3,10 +3,10 @@ from unittest import TestCase
 __author__ = 'Modulus'
 
 
-class GenerateListTest(TestCase):
+class ReadListsTest(TestCase):
 
     def setUp(self):
-        self.markup =  """<script type="text/javascript">
+        self.markup = """<script type="text/javascript">
             <!--
 
             // *** Set game type. ***

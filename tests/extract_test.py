@@ -23,7 +23,7 @@ class ExtractTest(TestCase):
 
         current_date = datetime.date(datetime(2014, 04, 19))
 
-        extractor.generate_lists = MagicMock(return_value=self.lists)
+        extractor.read_lists = MagicMock(return_value=self.lists)
         numbers = extractor.extract(7, start_date, current_date, "https://www.fjas.no")
 
         self.assertListEqual([2, 41, 27, 3, 42, 44, 36], numbers)
