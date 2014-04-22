@@ -17,7 +17,7 @@ def read_lists(start_date, end_date, url):
     The third array is how many times this number has been additional numbers
     """
 
-    base_url = url + "?fromDate={0}&toDate={1}&".format(start_date, end_date)
+    base_url = "{0}?fromDate={1}&toDate={2}&".format(url, start_date, end_date)
 
     stream = urllib2.urlopen(base_url)
 
@@ -31,7 +31,7 @@ def read_lists(start_date, end_date, url):
 
 
 def unique_filter(func):
-    """This decorator is nused on the extracted permutations to filter all the unique values in
+    """This decorator is used on the extracted permutations to filter all the unique values in
     the permutation. Since repetition will happen, because of its based on position and not value"""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
