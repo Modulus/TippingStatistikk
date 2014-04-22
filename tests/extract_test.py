@@ -3,7 +3,6 @@ from datetime import datetime
 from unittest import TestCase
 from mock import MagicMock
 from utilities import number_extractor as extractor
-from utilities.number_extractor import extract_unique
 
 __author__ = 'Modulus'
 
@@ -24,7 +23,7 @@ class ExtractTest(TestCase):
         current_date = datetime.date(datetime(2014, 04, 19))
 
         extractor.read_lists = MagicMock(return_value=self.lists)
-        numbers = extractor.extract(7, start_date, current_date, "https://www.fjas.no")
+        numbers = extractor.extract_all(7, start_date, current_date, "https://www.fjas.no")
 
         self.assertListEqual([2, 41, 27, 3, 42, 44, 36], numbers)
 
@@ -40,5 +39,5 @@ class ExtractTest(TestCase):
 
         self.assertEquals([1, 4, 7], elements)
 
-    def test_extract_unique_wrong_type(self):
-        self.assertRaises(TypeError, extract_unique, "doh!")
+
+

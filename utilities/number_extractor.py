@@ -1,4 +1,5 @@
 from collections import Counter
+import functools
 import json
 import urllib2
 from itertools import permutations
@@ -29,7 +30,30 @@ def read_lists(start_date, end_date, url):
             return json.loads(json_array)
 
 
-def extract(amount, start_date, end_date, url):
+def unique_filter(func):
+    """This decorator is nused on the extracted permutations to filter all the unique values in
+    the permutation. Since repetition will happen, because of its based on position and not value"""
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        extracted_unique = []
+        if result and type(result) == permutations:
+
+            for element in result:
+                sorted_values = sorted(element)
+                if not sorted_values in extracted_unique:
+                    extracted_unique.append(sorted_values)
+            return extracted_unique
+        else:
+            raise TypeError("You need to give itertools.permutations as parameter")
+        if extracted_unique:
+            return extracted_unique
+        else:
+            return result
+    return wrapper
+
+
+def extract_all(amount, start_date, end_date, url):
     """This function extract all the chosen amounts of most common numbers from the given url"""
     lists = read_lists(start_date=start_date.strftime(dateformat()),
                        end_date=end_date.strftime(dateformat()), url=url)
@@ -43,7 +67,8 @@ def extract(amount, start_date, end_date, url):
     return [e[0] for e in counter.most_common(amount)]
 
 
-def extract_permutations(length, amount, start_date, end_date, url):
+@unique_filter
+def extract(length, amount, start_date, end_date, url):
     """This functions will return all position permutations of the url given
         amount will be the count of numbers per resulting row in extracted data to be used for
         generating permutations.
@@ -51,22 +76,9 @@ def extract_permutations(length, amount, start_date, end_date, url):
         Keep in mind that repeating permutations will occur, since it is based on positions and not
         values.
     """
-    all_numbers = extract(amount, start_date, end_date, url)
+
+    all_numbers = extract_all(amount, start_date, end_date, url)
 
     perm = permutations(all_numbers, length)
 
     return perm
-
-
-def extract_unique(data):
-    """This function is unused on the extracted permutations to extract all the unique values in
-    the permutation. Since repetition will happen, because of its based on position and not value"""
-    if data and type(data) == permutations:
-        extracted_unique = []
-        for element in data:
-            sorted_values = sorted(element)
-            if not sorted_values in extracted_unique:
-                extracted_unique.append(sorted_values)
-        return extracted_unique
-    else:
-        raise TypeError("You need to give itertools.permutations as parameter")
