@@ -3,7 +3,7 @@ from datetime import datetime
 from unittest import TestCase
 from mock import MagicMock
 from utilities import number_extractor as extractor
-from utilities.number_extractor import extract_uniques
+from utilities.number_extractor import extract_unique
 
 __author__ = 'Modulus'
 
@@ -41,4 +41,4 @@ class ExtractTest(TestCase):
         self.assertEquals([1, 4, 7], elements)
 
     def test_extract_unique_wrong_type(self):
-        self.assertRaises(TypeError, extract_uniques, "doh!")
+        self.assertRaises(TypeError, extract_unique, "doh!")

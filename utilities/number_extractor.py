@@ -32,7 +32,7 @@ def read_lists(start_date, end_date, url):
 def extract(amount, start_date, end_date, url):
     """This function extract all the chosen amounts of most common numbers from the given url"""
     lists = read_lists(start_date=start_date.strftime(dateformat()),
-                           end_date=end_date.strftime(dateformat()), url=url)
+                       end_date=end_date.strftime(dateformat()), url=url)
     numbers = {}
     for index, value in enumerate(lists[1]):
         numbers[index + 1] = value
@@ -58,16 +58,15 @@ def extract_permutations(length, amount, start_date, end_date, url):
     return perm
 
 
-def extract_uniques(data):
+def extract_unique(data):
     """This function is unused on the extracted permutations to extract all the unique values in
     the permutation. Since repetition will happen, because of its based on position and not value"""
     if data and type(data) == permutations:
-        extracted_uniques = []
+        extracted_unique = []
         for element in data:
             sorted_values = sorted(element)
-            if not sorted_values in extracted_uniques:
-                extracted_uniques.append(sorted_values)
-        return extracted_uniques
+            if not sorted_values in extracted_unique:
+                extracted_unique.append(sorted_values)
+        return extracted_unique
     else:
         raise TypeError("You need to give itertools.permutations as parameter")
-

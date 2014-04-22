@@ -1,10 +1,13 @@
+from datetime import datetime
 from unittest import TestCase
+import urllib2
+from mock import Mock
+from utilities.number_extractor import read_lists
 
 __author__ = 'Modulus'
 
 
 class ReadListsTest(TestCase):
-
     def setUp(self):
         self.markup = """<script type="text/javascript">
             <!--
@@ -25,9 +28,22 @@ class ReadListsTest(TestCase):
             // -->
             </script>
             """
+        self.expected_table = [
+            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+             30, 31, 32, 33, 34],
+            [11, 8, 12, 6, 5, 13, 12, 13, 6, 9, 11, 14, 16, 13, 15, 10, 8, 10, 5, 9, 10, 6, 12, 14, 16, 11, 14, 15, 8,
+             12, 10, 10, 10, 10],
+            [4, 6, 2, 7, 7, 6, 7, 4, 5, 5, 8, 7, 5, 5, 4, 5, 5, 7, 2, 6, 0, 7, 3, 5, 3, 6, 0, 3, 1, 4, 0, 6, 6, 5]]
+
+        self.fake_stream = OpenerDirectorFake(self.markup.split("\n"))
+        urllib2.urlopen = Mock(return_value=self.fake_stream)
 
     def test_viking_url(self):
         url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsVikingLotto.htm"
+        list = read_lists(datetime.now(), datetime.now(), url)
+
+        self.assertIsNotNone(list)
+        self.assertEquals(self.expected_table, list)
 
     def test_lotto_url(self):
         url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsLotto.htm"
@@ -38,3 +54,10 @@ class ReadListsTest(TestCase):
     def test_keno_url(self):
         url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsKeno.htm"
 
+
+class OpenerDirectorFake(urllib2.OpenerDirector):
+    def __init__(self, markup):
+        self.markup = markup
+
+    def readlines(self):
+        return self.markup

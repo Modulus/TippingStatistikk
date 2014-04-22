@@ -1,6 +1,5 @@
 from datetime import datetime
 from unittest import TestCase
-from dateutil.relativedelta import relativedelta
 from utilities.date_utils import DateUtils
 
 __author__ = 'Modulus'

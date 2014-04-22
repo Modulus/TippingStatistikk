@@ -1,9 +1,10 @@
 from datetime import datetime
 from itertools import permutations
+from utilities.name_utils import get_game_name
 
 __author__ = 'Modulus'
 
-from utilities.number_extractor import extract_permutations, extract_uniques, get_name
+from utilities.number_extractor import extract_permutations, extract_unique
 
 
 def run():
@@ -20,11 +21,11 @@ def run():
 
     for index, url in enumerate(urls):
 
-        print(" {0} numbers".format(get_name(url)))
+        print(" {0} numbers".format(get_game_name(url)))
 
         permutations = extract_permutations(7, 8, start_date, current_date, url)
 
-        values = extract_uniques(permutations)
+        values = extract_unique(permutations)
 
         for value in values:
             print(value)
