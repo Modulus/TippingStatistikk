@@ -10,6 +10,9 @@ def get_game_name(url):
         """ Remove prefix and suffix (.htm)"""
         name = page[len("getNumberStatistics"):-4]
 
-        return name
+        if name:
+            return name.strip()
+        else:
+            return name
     else:
         return None

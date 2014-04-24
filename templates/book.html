@@ -1,0 +1,63 @@
+<html lang="end">
+<head>
+    <title>Hello, Knockout.js</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/>
+</head>
+<body>
+<h1>Hello, knockout</h1>
+
+<p><span data-bind="text: firstName"></span>'s shopping cart</p>
+<p><span data-bind="text: fullName"></span>'s shopping cart</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Product</th><th>Price</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: shoppingCart">
+        <tr>
+            <td data-bind="text: name"></td>
+            <td data-bind="text: price"></td>
+        </tr>
+    </tbody>
+</table>
+
+<button data-bind="click: checkout">Checkout</button>
+
+</body>
+
+<script type="text/javascript" src="{{url_for('static', filename='js/knockout-3.1.0.js')}}">
+
+</script>
+
+<script type="text/javascript">
+    function Product(name, price){
+        this.name = ko.observable(name);
+        this.price = ko.observable(price);
+    }
+
+
+
+    function PersonViewModel() {
+        this.firstName = ko.observable("John");
+        this.lastName = ko.observable("Doe");
+        this.checkout = function(){
+            alert("Trying to checkout!");
+        };
+        this.fullName = ko.computed(function(){
+            return this.firstName() + " " + this.lastName()
+        }, this);
+        this.shoppingCart = ko.observableArray([
+                new Product("Beer", 10.99),
+                new Product("Brats", 7.99),
+                new Product("Buns", 1.49)
+        ]);
+    };
+    var vm = new PersonViewModel();
+    ko.applyBindings(vm);
+    vm.firstName("Kjetil")
+</script>
+
+</html>
