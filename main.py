@@ -25,12 +25,12 @@ def get_lotto_numbers():
     end_date = request.args.get("end_date", default=datetime.date(datetime(now.year, now.month, now.day)))
     game = request.args.get("game", default="lotto")
 
-    name = (" {0} numbers".format(get_game_name(url_map.get(game))))
+    name = (" {0} nummer".format(get_game_name(url_map.get(game))))
 
     permutations = extract(7, 8, start_date, end_date, url_map.get(game))
 
     data = Data(start_date, end_date, name, permutations)
-    return jsonify({"data": data.json()})
+    return jsonify(data.json())
 
 @app.route("/", methods=["GET"])
 def get_view():
@@ -39,6 +39,10 @@ def get_view():
 @app.route("/book", methods=["GET"])
 def get_bookview():
     return render_template("book.html")
+
+@app.route("/about", methods=["GET"])
+def get_aboutview():
+    return render_template("about.html")
 
 
 def run():
@@ -67,7 +71,7 @@ def run():
 
 if __name__ == "__main__":
     #Visible on the network
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0", port=8080)
 
     #Local access only
-    app.run(debug=True)
+    # app.run(debug=True)

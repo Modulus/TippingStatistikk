@@ -14,10 +14,10 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='lib/bootstrap-3.1.1-dist/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="../static/lib/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{{url_for('static', filename='css/navbar-fixed-top.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/custom-bootstrap.css')}}" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]>
@@ -47,28 +47,19 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="http://getbootstrap.com/examples/navbar-fixed-top/#">Home</a></li>
-                <li><a href="http://getbootstrap.com/examples/navbar-fixed-top/#about">About</a></li>
                 <li class="dropdown">
                     <a href="http://getbootstrap.com/examples/navbar-fixed-top/#" class="dropdown-toggle"
-                       data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                       data-toggle="dropdown">Velg spill <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="http://getbootstrap.com/examples/navbar-fixed-top/#">Action</a></li>
-                        <li><a href="http://getbootstrap.com/examples/navbar-fixed-top/#">Another action</a></li>
-                        <li><a href="http://getbootstrap.com/examples/navbar-fixed-top/#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="http://getbootstrap.com/examples/navbar-fixed-top/#">Separated link</a></li>
-                        <li><a href="http://getbootstrap.com/examples/navbar-fixed-top/#">One more separated link</a>
-                        </li>
+                        <li><a id="lotto" href="">Lotto</a></li>
+                        <li><a id="viking_lotto" href="">Viking Lotto</a></li>
+                        <li><a id="extra" href="">Extra</a></li>
+                        <li><a id="keno" href="">Keno</a></li>
                     </ul>
                 </li>
+                <li><a href="/about">Om siden</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://getbootstrap.com/examples/navbar/">Default</a></li>
-                <li><a href="http://getbootstrap.com/examples/navbar-static-top/">Static top</a></li>
-                <li class="active"><a href="./index_files/index.html">Fixed top</a></li>
-            </ul>
+
         </div>
         <!--/.nav-collapse -->
     </div>
@@ -77,104 +68,50 @@
 <div class="container">
 
     <!-- Main component for a primary marketing message or call to action -->
+    <!-- Move this to its own about page-->
+    <!--<div class="jumbotron">-->
+    <!--<h1>Kupong generator</h1>-->
+
+    <!--<p>Her kan du generere kuponger til Lotto, Viking Lotto, Extra eller Keno. Alt er basert på tidligere-->
+    <!--trekninger, kupongene kan opprettes med tall som er valgt ofte eller sjelden.</p>-->
+
+    <!--<p>-->
+    <!--<a class="btn btn-lg btn-primary" href="/book" role="button">Go to knockout demo»</a>-->
+    <!--</p>-->
+    <!--</div>-->
+    <!--<div class="jumbotron">-->
+    <!--<div class="input-group">-->
+    <!--<select class="form-control">-->
+    <!--<option value="lotto">Lotto</option>-->
+    <!--<option value="viking_lotto">Viking Lotto</option>-->
+    <!--<option value="extra">Extra</option>-->
+    <!--<option value="keno">Keno</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--</div>-->
+
     <div class="jumbotron">
-        <h1>Kupong generator</h1>
 
-        <p>Her kan du generere kuponger til Lotto, Viking Lotto, Extra eller Keno. Alt er basert på tidligere
-            trekninger, kupongene kan opprettes med tall som er valg ofte eller sjelden.</p>
 
-        <p>
-            <a class="btn btn-lg btn-primary" href="/book" role="button">Go to knockout demo»</a>
-        </p>
-    </div>
-
-    <div class="jumbotron">
         <div class="panel panel-default">
-            <!-- Default panel contents -->
-            <div class="panel-heading">Viking Lotto</div>
-            <!--<div class="panel-body">-->
-                <!--<p>Viking Lotto</p>-->
-            <!--</div>-->
-            <table class="table">
-                <!--<thead>-->
-                <!--<tr>-->
-                    <!--<th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <tbody>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <p>
-            <a class="btn btn-lg btn-primary" href="/book" role="button">Go to knockout demo»</a>
-        </p>
-    </div>
 
-    <div class="jumbotron">
-        <div class="panel panel-default">
             <!-- Default panel contents -->
-            <div class="panel-heading">Lotto</div>
+            <div class="panel-heading"><span data-bind="text: lotto.name"></span></div>
             <!--<div class="panel-body">-->
             <!--<p>Viking Lotto</p>-->
             <!--</div>-->
             <table class="table">
-                <!--<thead>-->
-                <!--<tr>-->
-                    <!--<th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <tbody>
+                <tbody data-bind="foreach: lotto.numbers">
                 <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
+                    <td data-bind="text: cell1"></td>
+                    <td data-bind="text: cell2"></td>
+                    <td data-bind="text: cell3"></td>
+                    <td data-bind="text: cell4"></td>
+                    <td data-bind="text: cell5"></td>
+                    <td data-bind="text: cell6"></td>
+                    <td data-bind="text: cell7"></td>
                 </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
+
                 </tbody>
             </table>
         </div>
@@ -182,114 +119,80 @@
             <a class="btn btn-lg btn-primary" href="/book" role="button">Go to knockout demo»</a>
         </p>
     </div>
-
-
     <div class="jumbotron">
         <div class="panel panel-default">
+
             <!-- Default panel contents -->
-            <div class="panel-heading">Extra</div>
+            <div class="panel-heading"><span data-bind="text: viking_lotto.name"></span></div>
             <!--<div class="panel-body">-->
             <!--<p>Viking Lotto</p>-->
             <!--</div>-->
             <table class="table">
-                <!--<thead>-->
-                <!--<tr>-->
-                    <!--<th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <tbody>
+                <tbody data-bind="foreach: viking_lotto.numbers">
                 <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
+                    <td data-bind="text: cell1"></td>
+                    <td data-bind="text: cell2"></td>
+                    <td data-bind="text: cell3"></td>
+                    <td data-bind="text: cell4"></td>
+                    <td data-bind="text: cell5"></td>
+                    <td data-bind="text: cell6"></td>
+                    <td data-bind="text: cell7"></td>
                 </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
+
                 </tbody>
             </table>
         </div>
-        <p>
-            <a class="btn btn-lg btn-primary" href="/book" role="button">Go to knockout demo»</a>
-        </p>
     </div>
-
-
     <div class="jumbotron">
         <div class="panel panel-default">
+
             <!-- Default panel contents -->
-            <div class="panel-heading">Keno</div>
+            <div class="panel-heading"><span data-bind="text: extra.name"></span></div>
             <!--<div class="panel-body">-->
             <!--<p>Viking Lotto</p>-->
             <!--</div>-->
             <table class="table">
-                <!--<thead>-->
-                <!--<tr>-->
-                    <!--<th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <tbody>
+                <tbody data-bind="foreach: extra.numbers">
                 <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
+                    <td data-bind="text: cell1"></td>
+                    <td data-bind="text: cell2"></td>
+                    <td data-bind="text: cell3"></td>
+                    <td data-bind="text: cell4"></td>
+                    <td data-bind="text: cell5"></td>
+                    <td data-bind="text: cell6"></td>
+                    <td data-bind="text: cell7"></td>
                 </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
-                </tr>
+
                 </tbody>
             </table>
         </div>
-        <p>
-            <a class="btn btn-lg btn-primary" href="/book" role="button">Go to knockout demo»</a>
-        </p>
     </div>
 
+    <div class="jumbotron">
+        <div class="panel panel-default">
 
+            <!-- Default panel contents -->
+            <div class="panel-heading"><span data-bind="text: keno.name"></span></div>
+            <!--<div class="panel-body">-->
+            <!--<p>Viking Lotto</p>-->
+            <!--</div>-->
+            <table class="table">
+                <tbody data-bind="foreach: keno.numbers">
+                <tr>
+                    <td data-bind="text: cell1"></td>
+                    <td data-bind="text: cell2"></td>
+                    <td data-bind="text: cell3"></td>
+                    <td data-bind="text: cell4"></td>
+                    <td data-bind="text: cell5"></td>
+                    <td data-bind="text: cell6"></td>
+                    <td data-bind="text: cell7"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </div>
 <!-- /container -->
 
@@ -300,6 +203,108 @@
 <script src="{{url_for('static', filename='js/jquery-2.1.0.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/knockout-3.1.0.js')}}"></script>
 <script src="{{url_for('static', filename='lib/bootstrap-3.1.1-dist/js/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/custom.js')}}"></script>
+<script type="text/javascript">
+    function LottoViewModel(name) {
+        var self = this;
+        this.lotto = {
+            name: ko.observable("Lotto"),
+            numbers: ko.observableArray([]),
+            start_date: ko.observable(""),
+            end_date: ko.observable(""),
+            init: function () {
+                var url = "/api/lotto?game=lotto"
+                $.getJSON(url, function (data) {
+                    self.lotto.name(data.name);
+                    self.lotto.start_date(data.start_date);
+                    self.lotto.end_date(data.end_date);
+                    data.numbers.forEach(function (row) {
+                        self.lotto.numbers.push(new LottoRow(row));
+                    });
+                });
+            }
+
+        };
+        this.viking_lotto = {
+            name: ko.observable("Viking lotto"),
+            numbers: ko.observableArray([]),
+            start_date: ko.observable(""),
+            end_date: ko.observable(""),
+            init: function () {
+                var url = "/api/lotto?game=viking_lotto"
+                $.getJSON(url, function (data) {
+                    self.viking_lotto.name(data.name);
+                    self.viking_lotto.start_date(data.start_date);
+                    self.viking_lotto.end_date(data.end_date);
+                    data.numbers.forEach(function (row) {
+                        self.viking_lotto.numbers.push(new LottoRow(row));
+                    });
+                });
+            }
+        };
+
+        this.extra = {
+            name: ko.observable("Extra"),
+            numbers: ko.observableArray([]),
+            start_date: ko.observable(""),
+            end_date: ko.observable(""),
+            init: function () {
+                var url = "/api/lotto?game=extra"
+                $.getJSON(url, function (data) {
+                    self.extra.name(data.name);
+                    self.extra.start_date(data.start_date);
+                    self.extra.end_date(data.end_date);
+                    data.numbers.forEach(function (row) {
+                        self.extra.numbers.push(new LottoRow(row));
+                    });
+                });
+            }
+        };
+
+        this.keno = {
+            name: ko.observable("Keno"),
+            numbers: ko.observableArray([]),
+            start_date: ko.observable(""),
+            end_date: ko.observable(""),
+            init: function () {
+                var url = "/api/lotto?game=keno"
+                $.getJSON(url, function (data) {
+                    self.keno.name(data.name);
+                    self.keno.start_date(data.start_date);
+                    self.keno.end_date(data.end_date);
+                    data.numbers.forEach(function (row) {
+                        self.keno.numbers.push(new LottoRow(row));
+                    });
+                });
+            }
+        };
+
+        this.init = function () {
+            var lottoViewModel = new LottoViewModel();
+            ko.applyBindings(lottoViewModel);
+            lottoViewModel.lotto.init();
+            lottoViewModel.viking_lotto.init();
+            lottoViewModel.extra.init();
+            lottoViewModel.keno.init();
+
+        }
+    }
+
+
+    function LottoRow(data) {
+        this.cell1 = data[0];
+        this.cell2 = data[1];
+        this.cell3 = data[2];
+        this.cell4 = data[3];
+        this.cell5 = data[4];
+        this.cell6 = data[5];
+        this.cell7 = data[6];
+    }
+
+    lottoViewModel = new LottoViewModel();
+    lottoViewModel.init();
+
+</script>
 
 
 </body>

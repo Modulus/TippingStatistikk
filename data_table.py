@@ -14,5 +14,5 @@ class Data(object):
             "start_date": str(self.start_date),
             "end_date": str(self.end_date),
             "name": self.name,
-            "data": self.data
+            "numbers": self.data
         }
