@@ -29,6 +29,8 @@ def get_lotto_numbers():
 
     permutations = extract(7, 8, start_date, end_date, url_map.get(game))
 
+    permutations.sort()
+
     data = Data(start_date, end_date, name, permutations)
     return jsonify(data.json())
 
@@ -62,6 +64,7 @@ def run():
         print(" {0} numbers".format(get_game_name(url)))
 
         permutations = extract(7, 8, start_date, current_date, url)
+
 
         for value in permutations:
             print(value)
