@@ -243,8 +243,9 @@
             numbers: ko.observableArray([]),
             start_date: ko.observable(""),
             end_date: ko.observable(""),
-            init: function () {
-                var url = "/api/lotto?game=lotto"
+            init: function (start_date, end_date) {
+                var url = "/api/lotto?game=lotto&start_date=" + start_date+"&end_date="+end_date;
+                alert(url);
                 $.getJSON(url, function (data) {
                     self.lotto.name(data.name);
                     self.lotto.start_date(data.start_date);
@@ -350,7 +351,7 @@
             $("#lottoButton").click(function(){
                 var startDate = $("#lottoStartDatePicker").val();
                 var endDate = $("#lottoEndDatePicker").val();
-                lottoViewModel.lotto.init();
+                lottoViewModel.lotto.init(startDate, endDate);
             });
 
             $("#lottoButtonClear").click(function(){
