@@ -27,3 +27,11 @@ class MainTests(TestCase):
         self.assertEquals(2016, dates[7].year)
         self.assertEquals(2022, dates[8].year)
 
+    def test_sum(self):
+        sum = 0
+        for i in range(0, 10):
+            sum += i
+
+        print sum
+
+

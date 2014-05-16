@@ -72,9 +72,9 @@ def run():
         print("\n")
 
 
-# if __name__ == "__main__":
-#     #Visible on the network
-#     app.run(debug=True, host="0.0.0.0", port=8080)
+if __name__ == "__main__":
+    #Visible on the network
+    app.run(debug=True, host="0.0.0.0", port=8080)
 
     #Local access only
     # app.run(debug=True)

@@ -18,6 +18,7 @@
     <!-- Custom styles for this template -->
     <link href="{{url_for('static', filename='css/navbar-fixed-top.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='css/custom-bootstrap.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='lib/datepicker/css/datepicker.css')}}" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]>
@@ -58,17 +59,12 @@
 
 <div class="container">
 
-
     <div class="jumbotron">
 
 
         <div class="panel panel-default">
-
             <!-- Default panel contents -->
             <div class="panel-heading"><span data-bind="text: lotto.name"></span></div>
-            <!--<div class="panel-body">-->
-            <!--<p>Viking Lotto</p>-->
-            <!--</div>-->
             <table class="table">
                 <tbody data-bind="foreach: lotto.numbers">
                 <tr>
@@ -84,9 +80,23 @@
                 </tbody>
             </table>
         </div>
-        <!--<p>-->
-            <!--<a class="btn btn-lg btn-primary" href="/book" role="button">Go to knockout demo»</a>-->
-        <!--</p>-->
+        <div>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <label for="lottoStartDatePicker">Start:</label>
+                    <input class="form-control" type="date" placeholder="[Enter start date]" id="lottoStartDatePicker"/>
+                    <label for="lottoEndDatePicker">End:</label>
+                    <input class="form-control" type="date" placeholder="[Enter end date]" id="lottoEndDatePicker"/>
+                    <button type="button" class="btn btn-primary" id="lottoButton" data-toggle="popover" data-placement="bottom" data-content="Fetch numbers">
+                        <span class="glyphicon glyphicon glyphicon-refresh"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="lottoButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
+                        <span class="glyphicon glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </form>
+
+        </div>
     </div>
     <div class="jumbotron">
         <div class="panel panel-default">
@@ -111,6 +121,23 @@
                 </tbody>
             </table>
         </div>
+        <div>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <label for="vikingStartDatePicker">Start:</label>
+                    <input class="form-control" type="date" placeholder="[Enter start date]" id="vikingStartDatePicker"/>
+                    <label for="vikingEndDatePicker">End:</label>
+                    <input class="form-control" type="date" placeholder="[Enter end date]" id="vikingEndDatePicker"/>
+                    <button type="button" class="btn btn-primary" id="vikingButton" data-toggle="popover" data-placement="bottom" data-content="Fetch numbers">
+                        <span class="glyphicon glyphicon glyphicon-refresh"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="vikingButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
+                        <span class="glyphicon glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </form>
+
+        </div>
     </div>
     <div class="jumbotron">
         <div class="panel panel-default">
@@ -134,6 +161,23 @@
 
                 </tbody>
             </table>
+        </div>
+        <div>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <label for="extraStartDatePicker">Start:</label>
+                    <input class="form-control" type="date" placeholder="[Enter start date]" id="extraStartDatePicker"/>
+                    <label for="extraEndDatePicker">End:</label>
+                    <input class="form-control" type="date" placeholder="[Enter end date]" id="extraEndDatePicker"/>
+                    <button type="button" class="btn btn-primary" id="extraButton" data-toggle="popover" data-placement="bottom" data-content="Fetch numbers">
+                        <span class="glyphicon glyphicon glyphicon-refresh"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="extraButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
+                        <span class="glyphicon glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </form>
+
         </div>
     </div>
 
@@ -160,6 +204,23 @@
                 </tbody>
             </table>
         </div>
+        <div>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <label for="kenoStartDatePicker">Start:</label>
+                    <input class="form-control" type="date" value="01/01/1983" id="kenoStartDatePicker"/>
+                    <label for="kenoEndDatePicker">End:</label>
+                    <input class="form-control" type="date" placeholder="[Enter end date]" id="kenoEndDatePicker"/>
+                    <button type="button" class="btn btn-primary" id="kenoButton" data-toggle="popover" data-placement="bottom" data-content="Fetch numbers">
+                        <span class="glyphicon glyphicon glyphicon-refresh"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="kenoButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
+                        <span class="glyphicon glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
 </div>
@@ -173,6 +234,7 @@
 <script src="{{url_for('static', filename='js/knockout-3.1.0.js')}}"></script>
 <script src="{{url_for('static', filename='lib/bootstrap-3.1.1-dist/js/bootstrap.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/custom.js')}}"></script>
+<script src="{{url_for('static', filename='lib/datepicker/js/bootstrap-datepicker.js')}}"></script>
 <script type="text/javascript">
     function LottoViewModel(name) {
         var self = this;
@@ -187,10 +249,19 @@
                     self.lotto.name(data.name);
                     self.lotto.start_date(data.start_date);
                     self.lotto.end_date(data.end_date);
+                    if(self.lotto.numbers){
+                        self.lotto.numbers.removeAll();
+                    }
+
                     data.numbers.forEach(function (row) {
                         self.lotto.numbers.push(new LottoRow(row));
                     });
                 });
+            },
+            removeAll : function(){
+                if(self.lotto.numbers){
+                    self.lotto.numbers.removeAll();
+                }
             }
 
         };
@@ -205,10 +276,18 @@
                     self.viking_lotto.name(data.name);
                     self.viking_lotto.start_date(data.start_date);
                     self.viking_lotto.end_date(data.end_date);
+                    if(self.viking_lotto.numbers){
+                        self.viking_lotto.numbers.removeAll();
+                    }
                     data.numbers.forEach(function (row) {
                         self.viking_lotto.numbers.push(new LottoRow(row));
                     });
                 });
+            },
+            removeAll : function(){
+                if(self.viking_lotto.numbers){
+                    self.viking_lotto.numbers.removeAll();
+                }
             }
         };
 
@@ -223,10 +302,18 @@
                     self.extra.name(data.name);
                     self.extra.start_date(data.start_date);
                     self.extra.end_date(data.end_date);
+                    if(self.extra.numbers){
+                        self.extra.numbers.removeAll();
+                    }
                     data.numbers.forEach(function (row) {
                         self.extra.numbers.push(new LottoRow(row));
                     });
                 });
+            },
+            removeAll : function(){
+                if(self.extra.numbers){
+                    self.extra.numbers.removeAll();
+                }
             }
         };
 
@@ -241,20 +328,68 @@
                     self.keno.name(data.name);
                     self.keno.start_date(data.start_date);
                     self.keno.end_date(data.end_date);
+                    if(self.keno.numbers){
+                        self.keno.numbers.removeAll();
+                    }
                     data.numbers.forEach(function (row) {
                         self.keno.numbers.push(new LottoRow(row));
                     });
                 });
+            },
+            removeAll : function(){
+                if(self.keno.numbers){
+                    self.keno.numbers.removeAll();
+                }
             }
         };
 
         this.init = function () {
             var lottoViewModel = new LottoViewModel();
             ko.applyBindings(lottoViewModel);
-            lottoViewModel.lotto.init();
-            lottoViewModel.viking_lotto.init();
-            lottoViewModel.extra.init();
-            lottoViewModel.keno.init();
+
+            $("#lottoButton").click(function(){
+                var startDate = $("#lottoStartDatePicker").val();
+                var endDate = $("#lottoEndDatePicker").val();
+                lottoViewModel.lotto.init();
+            });
+
+            $("#lottoButtonClear").click(function(){
+                lottoViewModel.lotto.removeAll();
+            });
+
+            $("#vikingButton").click(function(){
+                lottoViewModel.viking_lotto.init();
+            });
+
+            $("#vikingButtonClear").click(function(){
+                lottoViewModel.viking_lotto.removeAll();
+            });
+
+            $("#extraButton").click(function(){
+                lottoViewModel.extra.init();
+            });
+
+            $("#extraButtonClear").click(function(){
+                lottoViewModel.extra.removeAll();
+            });
+
+
+            $("#kenoButton").click(function(){
+                lottoViewModel.keno.init();
+            });
+
+            $("#kenoButtonClear").click(function(){
+                lottoViewModel.keno.removeAll();
+            });
+
+
+
+
+
+//            lottoViewModel.viking_lotto.init();
+//            lottoViewModel.extra.init();
+//            lottoViewModel.keno.init();
+
 
         }
     }
@@ -274,6 +409,8 @@
     lottoViewModel.init();
 
 </script>
+
+
 
 
 </body>
