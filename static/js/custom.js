@@ -15,6 +15,8 @@ $(document).ready(function(){
         lottoViewModel.init();
     });
 
+//    $("#fromDatePicker").datepicker();
+
 //    $("#viking_lotto").click(function(event){
 //       event.preventDefault();
 //        lottoViewModel = new LottoViewModel("viking_lotto");

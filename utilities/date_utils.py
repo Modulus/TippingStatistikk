@@ -36,3 +36,6 @@ class DateUtils(object):
 
 def dateformat():
     return "%d.%m.%Y"
+
+def front_dateformat():
+    return "%m/%d/%Y"

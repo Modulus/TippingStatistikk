@@ -21,8 +21,10 @@ url_map = {
 @app.route("/api/lotto", methods=["GET"])
 def get_lotto_numbers():
     now = datetime.now()
-    start_date = request.args.get("start_date", default=datetime.date(datetime(1986, 01, 01)))
-    end_date = request.args.get("end_date", default=datetime.date(datetime(now.year, now.month, now.day)))
+    start_date_string = request.args.get("start_date")
+    end_date_string = request.args.get("end_date")
+    start_date = request.args.get(datetime.date(datetime(start_date_string, "%m/%d/%Y")), default=datetime.date(datetime(1986, 01, 01)))
+    end_date = request.args.get(datetime.date(datetime(end_date_string, "%m/%d/%Y")), default=datetime.date(datetime(now.year, now.month, now.day)))
     game = request.args.get("game", default="lotto")
 
     name = (" {0} nummer".format(get_game_name(url_map.get(game))))
@@ -74,9 +76,9 @@ def run():
         print("\n")
 
 
-# if __name__ == "__main__":
-#     #Visible on the network
-#     app.run(debug=True, host="0.0.0.0", port=8080)
+if __name__ == "__main__":
+    #Visible on the network
+    app.run(debug=True, host="0.0.0.0", port=8080)
 
     #Local access only
     # app.run(debug=True)
