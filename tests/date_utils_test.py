@@ -1,6 +1,6 @@
 from datetime import datetime
 from unittest import TestCase
-from utilities.date_utils import DateUtils
+from utilities import date_utils
 
 __author__ = 'Modulus'
 
@@ -12,7 +12,7 @@ class MainTests(TestCase):
         self.end = datetime.date(datetime(2014, 03, 24))
 
     def test_timedelta(self):
-        dates = DateUtils.get_dates(self.start)
+        dates = date_utils.DateUtils.get_dates(self.start)
         self.assertIsNotNone(dates)
         self.assertNotEquals([], dates)
         self.assertEquals(9, len(dates))
