@@ -40,23 +40,36 @@ class ReadListsTest(TestCase):
 
     def test_viking_url(self):
         url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsVikingLotto.htm"
-        list = read_lists(datetime.now(), datetime.now(), url)
+        data = read_lists(datetime.now(), datetime.now(), url)
 
-        self.assertIsNotNone(list)
-        self.assertEquals(self.expected_table, list)
+        self.assertIsNotNone(data)
+        self.assertEquals(self.expected_table, data)
 
     def test_lotto_url(self):
         url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsLotto.htm"
+        data = read_lists(datetime.now(), datetime.now(), url)
+
+        self.assertIsNotNone(data)
+        self.assertEquals(self.expected_table, data)
 
     def test_extra_url(self):
         url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsExtra.htm"
+        data = read_lists(datetime.now(), datetime.now(), url)
+
+        self.assertIsNotNone(data)
+        self.assertEquals(self.expected_table, data)
 
     def test_keno_url(self):
         url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsKeno.htm"
+        data = read_lists(datetime.now(), datetime.now(), url)
+
+        self.assertIsNotNone(data)
+        self.assertEquals(self.expected_table, data)
 
 
 class OpenerDirectorFake(urllib2.OpenerDirector):
     def __init__(self, markup):
+        urllib2.OpenerDirector.__init__(self)
         self.markup = markup
 
     def readlines(self):

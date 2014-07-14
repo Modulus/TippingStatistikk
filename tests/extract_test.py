@@ -23,9 +23,10 @@ class ExtractTest(TestCase):
         current_date = datetime.date(datetime(2014, 04, 19))
 
         extractor.read_lists = Mock(return_value=self.lists)
-        numbers = extractor.extract_all(7, start_date, current_date, "https://www.fjas.no")
+        numbers = extractor.extract_most_common(7, start_date, current_date, "https://www.fjas.no")
 
         self.assertListEqual([2, 41, 27, 3, 42, 44, 36], numbers)
+
 
     def test_most_common(self):
         data = {1: 300, 2: 1, 4: 200, 7: 150, 1000: 23, 9999: 87, 999123992: 123}
@@ -39,5 +40,33 @@ class ExtractTest(TestCase):
 
         self.assertEquals([1, 4, 7], elements)
 
+    def test_extract_least_common(self):
+        start_date = datetime.date(datetime(1986, 01, 01))
 
+        current_date = datetime.date(datetime(2014, 04, 19))
+
+        extractor.read_lists = Mock(return_value=self.lists)
+        numbers = extractor.extract_least_common(7, start_date, current_date, "https://www.fjas.no")
+
+        self.assertListEqual([10, 15, 29, 33, 20, 12, 19], numbers)
+
+    def test_exract_most_common_flag_false(self):
+        start_date = datetime.date(datetime(1986, 01, 01))
+
+        current_date = datetime.date(datetime(2014, 04, 19))
+
+        extractor.read_lists = Mock(return_value=self.lists)
+        numbers = extractor.extract(7, 7, start_date, current_date, "https://www.fjas.no", most_common=False)
+
+        self.assertListEqual([[10, 12, 15, 19, 20, 29, 33]], numbers)
+
+    def test_extract_most_common_flag_true(self):
+        start_date = datetime.date(datetime(1986, 01, 01))
+
+        current_date = datetime.date(datetime(2014, 04, 19))
+
+        extractor.read_lists = Mock(return_value=self.lists)
+        numbers = extractor.extract(7, 7, start_date, current_date, "https://www.fjas.no", most_common=True)
+
+        self.assertListEqual([[2, 3, 27, 36, 41, 42, 44]], numbers)
 

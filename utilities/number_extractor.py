@@ -3,6 +3,7 @@ import functools
 import json
 import urllib2
 from itertools import permutations
+import operator
 
 from utilities.date_utils import dateformat
 
@@ -46,14 +47,10 @@ def unique_filter(func):
             return extracted_unique
         else:
             raise TypeError("You need to give itertools.permutations as parameter")
-        if extracted_unique:
-            return extracted_unique
-        else:
-            return result
     return wrapper
 
 
-def extract_all(amount, start_date, end_date, url):
+def extract_most_common(amount, start_date, end_date, url):
     """This function extract all the chosen amounts of most common numbers from the given url"""
     lists = read_lists(start_date=start_date.strftime(dateformat()),
                        end_date=end_date.strftime(dateformat()), url=url)
@@ -67,8 +64,25 @@ def extract_all(amount, start_date, end_date, url):
     return [e[0] for e in counter.most_common(amount)]
 
 
+def extract_least_common(amount, start_date, end_date, url):
+    """This function will extract all the least picked numbers for the given url, start and end date"""
+    lists = read_lists(start_date=start_date.strftime(dateformat()),
+                       end_date=end_date.strftime(dateformat()), url=url)
+    numbers = {}
+    for index, value in enumerate(lists[1]):
+        numbers[index + 1] = value
+
+    counter = Counter(numbers)
+    numbers = counter.most_common()
+
+    #Sort numbers by value (amount the currect number has been picked
+    sorted_numbers = sorted(iter(numbers), key=operator.itemgetter(1), reverse=False)
+
+    return [e[0] for e in sorted_numbers[0:amount]]
+
+
 @unique_filter
-def extract(length, amount, start_date, end_date, url):
+def extract(length, amount, start_date, end_date, url, most_common=True):
     """This functions will return all position permutations of the url given
         amount will be the count of numbers per resulting row in extracted data to be used for
         generating permutations.
@@ -77,7 +91,10 @@ def extract(length, amount, start_date, end_date, url):
         values.
     """
 
-    all_numbers = extract_all(amount, start_date, end_date, url)
+    if most_common:
+        all_numbers = extract_most_common(amount, start_date, end_date, url)
+    else:
+        all_numbers = extract_least_common(amount, start_date, end_date, url)
 
     perm = permutations(all_numbers, length)
 
