@@ -26,6 +26,7 @@ def get_lotto_numbers():
     start_date = request.args.get(datetime.date(datetime(start_date_string, "%m/%d/%Y")), default=datetime.date(datetime(1986, 01, 01)))
     end_date = request.args.get(datetime.date(datetime(end_date_string, "%m/%d/%Y")), default=datetime.date(datetime(now.year, now.month, now.day)))
     game = request.args.get("game", default="lotto")
+    most_common = request.args.get("most_common", default="false")
 
     name = (" {0} nummer".format(get_game_name(url_map.get(game))))
 
