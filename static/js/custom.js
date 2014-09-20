@@ -7,7 +7,9 @@ $(document).ready(function(){
 //    $("#extra").preventDefault();
 //    $("#keno").preventDefault();
 
-    $("#lotto").click(function(event){
+    $("#lottoLeastButton").click(function(event){
+
+        alert("Clicked");
         event.preventDefault();
         lottoViewModel = new LottoViewModel();
 

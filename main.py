@@ -36,6 +36,42 @@ def get_lotto_numbers():
     data = Data(start_date, end_date, name, permutations)
     return jsonify(data.json())
 
+@app.route("/api/lotto/least", methods=["GET"])
+def get_least_picked_lotto():
+    now = datetime.now()
+    #start_date_string = request.args.get("start_date")
+    #end_date_string = request.args.get("end_date")
+    start_date = datetime.date(datetime(2004, 01, 01))
+    end_date = datetime.date(datetime(2014, 01, 01))
+    #game = request.args.get("game", default="lotto")
+
+    name = (" {0} nummer".format(get_game_name(url_map.get("lotto"))))
+
+    permutations = extract(7, 10,start_date, end_date, url_map.get("lotto"), most_common=False)
+
+    permutations.sort()
+
+    data = Data(start_date, end_date, name, permutations)
+    return jsonify(data.json())
+
+@app.route("/api/lotto/most", methods=["GET"])
+def get_most_picked_lotto():
+    now = datetime.now()
+    #start_date_string = request.args.get("start_date")
+    #end_date_string = request.args.get("end_date")
+    start_date = datetime.date(datetime(2004, 01, 01))
+    end_date = datetime.date(datetime(2014, 01, 01))
+    #game = request.args.get("game", default="lotto")
+
+    name = (" {0} nummer".format(get_game_name(url_map.get("lotto"))))
+
+    permutations = extract(7, 10, start_date, end_date, url_map.get("lotto"), most_common=True)
+
+    permutations.sort()
+
+    data = Data(start_date, end_date, name, permutations)
+    return jsonify(data.json())
+
 
 @app.route("/", methods=["GET"])
 def get_view():
