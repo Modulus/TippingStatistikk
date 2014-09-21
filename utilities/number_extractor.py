@@ -1,10 +1,11 @@
 from collections import Counter
+from datetime import datetime
 import functools
 import json
 import urllib2
 from itertools import permutations
 import operator
-
+from time import mktime
 from utilities.date_utils import dateformat
 
 
@@ -18,7 +19,13 @@ def read_lists(start_date, end_date, url):
     The third array is how many times this number has been additional numbers
     """
 
-    base_url = "{0}?fromDate={1}&toDate={2}&".format(url, start_date, end_date)
+    start = datetime.fromtimestamp(mktime(start_date))
+    end = datetime.fromtimestamp(mktime(end_date))
+
+    start_date_string = "{0}.{1}.{2}".format(start.day, start.month, start.year)
+    end_date_string = "{0}.{1}.{2}".format(end.day, end.month, end.year)
+
+    base_url = "{0}?fromDate={1}&toDate={2}&".format(url, start_date_string, end_date_string)
 
     stream = urllib2.urlopen(base_url)
 
@@ -52,22 +59,26 @@ def unique_filter(func):
 
 def extract_most_common(amount, start_date, end_date, url):
     """This function extract all the chosen amounts of most common numbers from the given url"""
-    lists = read_lists(start_date=start_date.strftime(dateformat()),
-                       end_date=end_date.strftime(dateformat()), url=url)
-    numbers = {}
-    for index, value in enumerate(lists[1]):
-        numbers[index + 1] = value
 
-    counter = Counter(numbers)
+    lists = read_lists(start_date=start_date,
+                       end_date=end_date, url=url)
 
-    """Extract the actual numbers and return them"""
-    return [e[0] for e in counter.most_common(amount)]
+    if lists:
+        numbers = {}
+        for index, value in enumerate(lists[1]):
+            numbers[index + 1] = value
 
+        counter = Counter(numbers)
+
+        """Extract the actual numbers and return them"""
+        return [e[0] for e in counter.most_common(amount)]
+    else:
+        return []
 
 def extract_least_common(amount, start_date, end_date, url):
     """This function will extract all the least picked numbers for the given url, start and end date"""
-    lists = read_lists(start_date=start_date.strftime(dateformat()),
-                       end_date=end_date.strftime(dateformat()), url=url)
+    lists = read_lists(start_date=start_date,
+                       end_date=end_date, url=url)
     numbers = {}
     for index, value in enumerate(lists[1]):
         numbers[index + 1] = value

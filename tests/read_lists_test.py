@@ -54,7 +54,7 @@ class ReadListsTest(TestCase):
 
     def test_extra_url(self):
         url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsExtra.htm"
-        data = read_lists(datetime.now(), datetime.now(), url)
+       data = read_lists(datetime.now(), datetime.now(), url)
 
         self.assertIsNotNone(data)
         self.assertEquals(self.expected_table, data)

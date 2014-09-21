@@ -99,7 +99,7 @@
                     <button type="button" class="btn btn-danger" id="lottoButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                     </button>
-                    <button data-bind="getLeastLottoNumbers" type="button" class="btn btn-primary" id="lottoLeastButton" data-placement="bottom" data-content="Least picked">
+                    <button data-bind="click: lotto.getLeastLottoNumbers" type="button" class="btn btn-primary" id="lottoLeastButton" data-placement="bottom" data-content="Least picked">
                         <span class="glyphicon glyphicon-chevron-up"></span>
                     </button>
                     <button type="button" class="btn btn-success" id="lottoMostButton" data-placement="bottom" data-content="Least picked">
@@ -129,8 +129,8 @@
         this.lotto = {
             name: ko.observable("Lotto"),
             numbers: ko.observableArray([]),
-            start_date: ko.observable(""),
-            end_date: ko.observable(""),
+            start_date: ko.observable(new Date()),
+            end_date: ko.observable(new Date()),
             init: function (start_date, end_date) {
                 var url = "/api/lotto?game=lotto&start_date=" + start_date+"&end_date="+end_date;
                 alert(url);
@@ -153,8 +153,9 @@
                 }
             },
             getLeastLottoNumbers : function(){
+                var start_date = $("#lottoStartDatePicker").val();
+                var end_date = $("#lottoEndDatePicker").val();
                 var url = "/api/lotto?game=lotto&start_date=" + start_date+"&end_date="+end_date+"&most_common=false";
-                alert(url);
                 $.getJSON(url, function (data) {
                     self.lotto.name(data.name);
                     self.lotto.start_date(data.start_date);
