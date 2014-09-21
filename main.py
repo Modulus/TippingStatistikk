@@ -28,12 +28,19 @@ def get_lotto_numbers():
 
     start_date = time.strptime(str(start_date_string), "%Y-%m-%d")
     end_date = time.strptime(str(end_date_string), "%Y-%m-%d")
-    last = request.args.get("most_common", default="true")
+    most_common = request.args.get("most_common", default="true")
+    most = True
+    if most_common:
+        if most_common == "true":
+            most = True
+        else:
+            most = False
+
     game = "lotto"
 
     name = (" {0} nummer".format(get_game_name(url_map.get(game))))
 
-    permutations = extract(7, 8, start_date, end_date, url_map.get(game))
+    permutations = extract(7, 8, start_date, end_date, url_map.get(game), most_common=most)
 
     permutations.sort()
 
@@ -47,7 +54,7 @@ def get_least_picked_lotto():
     #end_date_string = request.args.get("end_date")
     start_date = datetime.date(datetime(2004, 01, 01))
     end_date = datetime.date(datetime(2014, 01, 01))
-    #game = request.args.get("game", default="lotto")
+    game = request.args.get("game", default="lotto")
 
     name = (" {0} nummer".format(get_game_name(url_map.get("lotto"))))
 
