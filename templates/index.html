@@ -85,24 +85,21 @@
 
         </div>
         <div id="fetchingAlert" class="alert alert-info" role="alert">
-            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             <strong>Info!</strong> Henter kupong-data, vennligst vent...
         </div>
         <div id="warningAlert" class="alert alert-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             <strong>Feil!</strong> Noe gikk galt, har du fylt ut til/fra dato?
         </div>
         <div id="successAlert" class="alert alert-success" role="alert">
-            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             <strong>Suksess!</strong> Kupongen er utfylt
         </div>
         <div>
             <form class="form-inline" role="form">
                 <div class="form-group">
                     <label for="lottoStartDatePicker">Start:</label>
-                    <input class="form-control" type="date" placeholder="[Enter start date]" id="lottoStartDatePicker"/>
+                    <input class="form-control" type="date" id="lottoStartDatePicker"/>
                     <label for="lottoEndDatePicker">End:</label>
-                    <input class="form-control" type="date" placeholder="[Enter end date]" id="lottoEndDatePicker"/>
+                    <input class="form-control" type="date" id="lottoEndDatePicker"/>
                     <!--<button type="button" class="btn btn-primary" id="lottoButton" data-toggle="popover" data-placement="bottom" data-content="Fetch numbers">
                         <span class="glyphicon glyphicon glyphicon-refresh"></span>
                     </button>-->
@@ -194,15 +191,17 @@
 
                     data.numbers.forEach(function (row) {
                         self.lotto.numbers.push(new LottoRow(row));
-                    }).done(function(){
-                        $("#successAlert").show();
-                        $("#warningAlert").hide();
-                        $("#fetchingAlert").hide();
-                    }).fail(function(){
-                        $("#successAlert").hide();
-                        $("#warningAlert").show();
-                        $("#fetchingAlert").hide();
                     });
+                }).done(function(){
+                            $("#successAlert").show();
+                            $("#warningAlert").hide();
+                            $("#fetchingAlert").hide();
+                    
+                        }).fail(function(){
+                            $("#successAlert").hide();
+                            $("#warningAlert").show();
+                            $("#fetchingAlert").hide();
+                        }).always(function(){
                 });
             }
 
@@ -215,8 +214,6 @@
             ko.applyBindings(lottoViewModel);
 
             $("#lottoButton").click(function(){
-                var startDate = $("#lottoStartDatePicker").val();
-                var endDate = $("#lottoEndDatePicker").val();
                 lottoViewModel.lotto.init(startDate, endDate);
             });
 
@@ -226,6 +223,9 @@
             $("#successAlert").hide();
             $("#warningAlert").hide();
             $("#fetchingAlert").hide();
+
+            $("#lottoStartDatePicker").val(new Date());
+            $("#lottoEndDatePicker").val(new Date());
 
         }
     }
