@@ -171,16 +171,25 @@
                     $("#successAlert").show();
                     $("#warningAlert").hide();
                     $("#fetchingAlert").hide();
+                    setTimeout(function(){
+                        $("#successAlert").fadeOut();
+                    }, 6000)
                 }).fail(function(){
                     $("#successAlert").hide();
                     $("#warningAlert").show();
                     $("#fetchingAlert").hide();
+                    setTimeout(function(){
+                        $("#warningAlert").fadeOut();
+                    },6000);
                 });
             },
             getMostLottNumbers : function(){
                 var start_date = $("#lottoStartDatePicker").val();
                 var end_date = $("#lottoEndDatePicker").val();
                 var url = "/api/lotto?game=lotto&start_date=" + start_date+"&end_date="+end_date+"&most_common=true";
+                $("#successAlert").hide();
+                $("#warningAlert").hide();
+                $("#fetchingAlert").show();
                 $.getJSON(url, function (data) {
                     self.lotto.name(data.name);
                     self.lotto.start_date(data.start_date);
@@ -196,13 +205,18 @@
                             $("#successAlert").show();
                             $("#warningAlert").hide();
                             $("#fetchingAlert").hide();
-                    
+                            setTimeout(function(){
+                                $("#successAlert").fadeOut;
+                            } ,6000);
+
                         }).fail(function(){
                             $("#successAlert").hide();
                             $("#warningAlert").show();
                             $("#fetchingAlert").hide();
-                        }).always(function(){
-                });
+                            setTimeout(function(){
+                                $("#warningAlert").fadeOut();
+                            } ,6000);
+                        });
             }
 
 
