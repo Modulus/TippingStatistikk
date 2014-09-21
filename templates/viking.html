@@ -48,7 +48,10 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Kuponger</a></li>
+                <li><a href="/">Lotto</a></li>
+                <li><a class="active" href="/viking">Viking Lotto</a></li>
+                <li><a href="/extra">Extra</a></li>
+                <li><a href="/keno">Keno</a></li>
                 <li><a href="/about">Om siden</a></li>
             </ul>
 
@@ -59,51 +62,6 @@
 
 <div class="container">
 
-    <div class="jumbotron">
-
-
-        <div class="panel panel-default">
-            <!-- Default panel contents -->
-            <div class="panel-heading"><span data-bind="text: lotto.name"></span></div>
-            <table class="table">
-                <tbody data-bind="foreach: lotto.numbers">
-                <tr>
-                    <td data-bind="text: cell1"></td>
-                    <td data-bind="text: cell2"></td>
-                    <td data-bind="text: cell3"></td>
-                    <td data-bind="text: cell4"></td>
-                    <td data-bind="text: cell5"></td>
-                    <td data-bind="text: cell6"></td>
-                    <td data-bind="text: cell7"></td>
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <form class="form-inline" role="form">
-                <div class="form-group">
-                    <label for="lottoStartDatePicker">Start:</label>
-                    <input class="form-control" type="date" placeholder="[Enter start date]" id="lottoStartDatePicker"/>
-                    <label for="lottoEndDatePicker">End:</label>
-                    <input class="form-control" type="date" placeholder="[Enter end date]" id="lottoEndDatePicker"/>
-                    <button type="button" class="btn btn-primary" id="lottoButton" data-toggle="popover" data-placement="bottom" data-content="Fetch numbers">
-                        <span class="glyphicon glyphicon glyphicon-refresh"></span>
-                    </button>
-                    <button type="button" class="btn btn-danger" id="lottoButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
-                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                    </button>
-                    <button type="button" class="btn btn-primary" id="lottoLeastButton" data-placement="bottom" data-content="Least picked">
-                        <span class="glyphicon glyphicon-chevron-up"></span>
-                    </button>
-                    <button type="button" class="btn btn-success" id="lottoMostButton" data-placement="bottom" data-content="Least picked">
-                        <span class="glyphicon glyphicon-chevron-down"></span>
-                    </button>
-                </div>
-            </form>
-
-        </div>
-    </div>
     <div class="jumbotron">
         <div class="panel panel-default">
 
@@ -145,89 +103,7 @@
 
         </div>
     </div>
-    <div class="jumbotron">
-        <div class="panel panel-default">
 
-            <!-- Default panel contents -->
-            <div class="panel-heading"><span data-bind="text: extra.name"></span></div>
-            <!--<div class="panel-body">-->
-            <!--<p>Viking Lotto</p>-->
-            <!--</div>-->
-            <table class="table">
-                <tbody data-bind="foreach: extra.numbers">
-                <tr>
-                    <td data-bind="text: cell1"></td>
-                    <td data-bind="text: cell2"></td>
-                    <td data-bind="text: cell3"></td>
-                    <td data-bind="text: cell4"></td>
-                    <td data-bind="text: cell5"></td>
-                    <td data-bind="text: cell6"></td>
-                    <td data-bind="text: cell7"></td>
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <form class="form-inline" role="form">
-                <div class="form-group">
-                    <label for="extraStartDatePicker">Start:</label>
-                    <input class="form-control" type="date" placeholder="[Enter start date]" id="extraStartDatePicker"/>
-                    <label for="extraEndDatePicker">End:</label>
-                    <input class="form-control" type="date" placeholder="[Enter end date]" id="extraEndDatePicker"/>
-                    <button type="button" class="btn btn-primary" id="extraButton" data-toggle="popover" data-placement="bottom" data-content="Fetch numbers">
-                        <span class="glyphicon glyphicon glyphicon-refresh"></span>
-                    </button>
-                    <button type="button" class="btn btn-danger" id="extraButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
-                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                    </button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-
-    <div class="jumbotron">
-        <div class="panel panel-default">
-
-            <!-- Default panel contents -->
-            <div class="panel-heading"><span data-bind="text: keno.name"></span></div>
-            <!--<div class="panel-body">-->
-            <!--<p>Viking Lotto</p>-->
-            <!--</div>-->
-            <table class="table">
-                <tbody data-bind="foreach: keno.numbers">
-                <tr>
-                    <td data-bind="text: cell1"></td>
-                    <td data-bind="text: cell2"></td>
-                    <td data-bind="text: cell3"></td>
-                    <td data-bind="text: cell4"></td>
-                    <td data-bind="text: cell5"></td>
-                    <td data-bind="text: cell6"></td>
-                    <td data-bind="text: cell7"></td>
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <form class="form-inline" role="form">
-                <div class="form-group">
-                    <label for="kenoStartDatePicker">Start:</label>
-                    <input class="form-control" type="date" value="01/01/1983" id="kenoStartDatePicker"/>
-                    <label for="kenoEndDatePicker">End:</label>
-                    <input class="form-control" type="date" placeholder="[Enter end date]" id="kenoEndDatePicker"/>
-                    <button type="button" class="btn btn-primary" id="kenoButton" data-toggle="popover" data-placement="bottom" data-content="Fetch numbers">
-                        <span class="glyphicon glyphicon glyphicon-refresh"></span>
-                    </button>
-                    <button type="button" class="btn btn-danger" id="kenoButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
-                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                    </button>
-                </div>
-            </form>
-
-        </div>
-    </div>
 </div>
 </div>
 <!-- /container -->

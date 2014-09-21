@@ -88,6 +88,17 @@ def get_most_picked_lotto():
 def get_view():
     return render_template("index.html")
 
+@app.route("/extra", methods=["GET"])
+def get_extra():
+    return render_template("extra.html")
+
+@app.route("/viking", methods=["GET"])
+def get_viking():
+    return render_template("viking.html")
+
+@app.route("/keno", methods=["GET"])
+def get_keno():
+    return render_template("keno.html")
 
 @app.route("/book", methods=["GET"])
 def get_bookview():
