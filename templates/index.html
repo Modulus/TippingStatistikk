@@ -82,6 +82,19 @@
 
                 </tbody>
             </table>
+
+        </div>
+        <div id="fetchingAlert" class="alert alert-info" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <strong>Info!</strong> Henter kupong-data, vennligst vent...
+        </div>
+        <div id="warningAlert" class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <strong>Feil!</strong> Noe gikk galt, har du fylt ut til/fra dato?
+        </div>
+        <div id="successAlert" class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <strong>Suksess!</strong> Kupongen er utfylt
         </div>
         <div>
             <form class="form-inline" role="form">
@@ -128,21 +141,11 @@
             numbers: ko.observableArray([]),
             start_date: ko.observable(new Date()),
             end_date: ko.observable(new Date()),
-            init: function (start_date, end_date) {
-                var url = "/api/lotto?game=lotto&start_date=" + start_date+"&end_date="+end_date;
-                alert(url);
-                $.getJSON(url, function (data) {
-                    self.lotto.name(data.name);
-                    self.lotto.start_date(data.start_date);
-                    self.lotto.end_date(data.end_date);
-                    if(self.lotto.numbers){
-                        self.lotto.numbers.removeAll();
-                    }
+            init: function () {
+                $("#successAlert").hide();
+                $("#warningAlert").hide();
+                $("#fetchingAlert").hide();
 
-                    data.numbers.forEach(function (row) {
-                        self.lotto.numbers.push(new LottoRow(row));
-                    });
-                });
             },
             removeAll : function(){
                 if(self.lotto.numbers){
@@ -153,6 +156,9 @@
                 var start_date = $("#lottoStartDatePicker").val();
                 var end_date = $("#lottoEndDatePicker").val();
                 var url = "/api/lotto?game=lotto&start_date=" + start_date+"&end_date="+end_date+"&most_common=false";
+                $("#successAlert").hide();
+                $("#warningAlert").hide();
+                $("#fetchingAlert").show();
                 $.getJSON(url, function (data) {
                     self.lotto.name(data.name);
                     self.lotto.start_date(data.start_date);
@@ -164,6 +170,14 @@
                     data.numbers.forEach(function (row) {
                         self.lotto.numbers.push(new LottoRow(row));
                     });
+                }).done(function(){
+                    $("#successAlert").show();
+                    $("#warningAlert").hide();
+                    $("#fetchingAlert").hide();
+                }).fail(function(){
+                    $("#successAlert").hide();
+                    $("#warningAlert").show();
+                    $("#fetchingAlert").hide();
                 });
             },
             getMostLottNumbers : function(){
@@ -180,6 +194,14 @@
 
                     data.numbers.forEach(function (row) {
                         self.lotto.numbers.push(new LottoRow(row));
+                    }).done(function(){
+                        $("#successAlert").show();
+                        $("#warningAlert").hide();
+                        $("#fetchingAlert").hide();
+                    }).fail(function(){
+                        $("#successAlert").hide();
+                        $("#warningAlert").show();
+                        $("#fetchingAlert").hide();
                     });
                 });
             }
@@ -201,6 +223,9 @@
             $("#lottoButtonClear").click(function(){
                 lottoViewModel.lotto.removeAll();
             });
+            $("#successAlert").hide();
+            $("#warningAlert").hide();
+            $("#fetchingAlert").hide();
 
         }
     }
