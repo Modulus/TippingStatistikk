@@ -19,8 +19,13 @@ def read_lists(start_date, end_date, url):
     The third array is how many times this number has been additional numbers
     """
 
-    start = datetime.fromtimestamp(mktime(start_date))
-    end = datetime.fromtimestamp(mktime(end_date))
+    if start_date and type(start_date) != datetime:
+        start = datetime.fromtimestamp(mktime(start_date))
+        end = datetime.fromtimestamp(mktime(end_date))
+    elif start_date and type(start_date) == datetime:
+        start = start_date
+        end = end_date
+
 
     start_date_string = "{0}.{1}.{2}".format(start.day, start.month, start.year)
     end_date_string = "{0}.{1}.{2}".format(end.day, end.month, end.year)

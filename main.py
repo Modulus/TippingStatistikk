@@ -25,22 +25,11 @@ def get_lotto_numbers():
     now = datetime.now()
     start_date_string = request.args.get("start_date", default="2004-06-20")
     end_date_string = request.args.get("end_date", default="2014-05-20")
-    #start_date = request.args.get(datetime.date(datetime(start_date_string, "%Y-%m-%d")), default=datetime.date(datetime(1986, 01, 01)))
-    #start_date = datetime.date(datetime(1986, 01, 01))
-    #end_date = request.args.get(datetime.date(datetime(end_date_string, "%Y-%m-%d")), default=datetime.date(datetime(now.year, now.month, now.day)))
-    #end_date = datetime.date(datetime(now.year, now.month, now.day))
 
-    #start_date = datetime.date(datetime(start_date_string, "%Y-%m-%d"))
-    #end_date = datetime.date(datetime(end_date_string, "%Y-%m-%d"))
     start_date = time.strptime(str(start_date_string), "%Y-%m-%d")
     end_date = time.strptime(str(end_date_string), "%Y-%m-%d")
-
-
+    last = request.args.get("most_common", default=True)
     game = "lotto"
-   # mport time#
-#>>> time.strptime("30 Nov 00", "%d %b %y")
-#time.struct_time(tm_year=2000, tm_mon=11, tm_mday=30, tm_hour=0, tm_min=0,
- #                tm_sec=0, tm_wday=3, tm_yday=335, tm_isdst=-1)
 
     name = (" {0} nummer".format(get_game_name(url_map.get(game))))
 
