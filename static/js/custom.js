@@ -10,6 +10,12 @@ $(document).ready(function(){
         return local.toJSON().slice(0, 10);
     });
 
+    var getYesterDay = (function(){
+        var local = new Date();
+        local.setDate(local.getDate() -1 );
+        return local.toJSON().slice(0,10);
+    });
+
     var getOlderDate = (function(year){
         var local = new Date();
         local.setYear(year)
@@ -19,6 +25,12 @@ $(document).ready(function(){
 
     $("#lottoStartDatePicker").val(getOlderDate(2004));
     $("#lottoEndDatePicker").val(getTodaysDate);
+
+    $("#lottoStartDatePicker").attr("max", getYesterDay());
+    $("#lottoEndDatePicker").attr("max", getTodaysDate());
+
+
+    getYesterDay();
 
 //    $("#lotto").preventDefault();
 //    $("#viking_lotto").preventDefault();
