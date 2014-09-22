@@ -40,7 +40,16 @@ def get_lotto_numbers():
 
     name = (" {0} nummer".format(get_game_name(url_map.get(game))))
 
-    permutations = extract(7, 8, start_date, end_date, url_map.get(game), most_common=most)
+    resolution_text = request.args.get("resolution", default="low")
+
+    resolution = 8
+
+    if resolution_text == "medium":
+        resolution = 9
+    elif resolution_text == "high":
+        resolution = 10
+
+    permutations = extract(7, resolution, start_date, end_date, url_map.get(game), most_common=most)
 
     permutations.sort()
 

@@ -160,6 +160,8 @@
                 $("#successAlert").hide();
                 $("#warningAlert").hide();
                 $("#fetchingAlert").show();
+                $("#lottoMostButton").prop("disabled", true);
+                $("#lottoLeastButton").prop("disabled", true);
                 $.getJSON(url, function (data) {
                     self.lotto.name(data.name);
                     self.lotto.start_date(data.start_date);
@@ -185,6 +187,9 @@
                     setTimeout(function(){
                         $("#warningAlert").fadeOut();
                     },6000);
+                }).always(function(){
+                    $("#lottoMostButton").prop("disabled", false);
+                    $("#lottoLeastButton").prop("disabled", false);
                 });
             },
             getMostLottNumbers : function(){
@@ -194,6 +199,8 @@
                 $("#successAlert").hide();
                 $("#warningAlert").hide();
                 $("#fetchingAlert").show();
+                $("#lottoMostButton").prop("disabled", true);
+                $("#lottoLeastButton").prop("disabled", true);
                 $.getJSON(url, function (data) {
                     self.lotto.name(data.name);
                     self.lotto.start_date(data.start_date);
@@ -220,6 +227,9 @@
                     setTimeout(function(){
                         $("#warningAlert").fadeOut();
                     } ,6000);
+                }).always(function(){
+                    $("#lottoMostButton").prop("disabled", false);
+                    $("#lottoLeastButton").prop("disabled", false);
                 });
             }
 
