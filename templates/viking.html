@@ -92,14 +92,16 @@
                     <input class="form-control" type="date" id="startDatePicker"  min="1986-01-01"/>
                     <label for="endDatePicker">Slutt:</label>
                     <input class="form-control" type="date" id="endDatePicker" min="1993-01-01"/>
+                    <label for="resolution">Oppløsning:</label>
+                    <select class="form-control" id="resolution" data-bind="options: lotto.resolution"></select>
 
                     <button data-bind="click: lotto.removeAll" type="button" class="btn btn-danger" id="lottoButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                     </button>
-                    <button data-bind="click: lotto.getMostLottNumbers" type="button" class="btn btn-success" id="lottoMostButton" data-placement="bottom" data-content="Least picked">
+                    <button data-bind="click: function(most_common, game) { lotto.getNumbers(true, 'viking_lotto')}" type="button" class="btn btn-success" id="lottoMostButton" data-placement="bottom" data-content="Least picked">
                         <span class="glyphicon glyphicon-chevron-up"></span>
                     </button>
-                    <button data-bind="click: lotto.getLeastLottoNumbers" type="button" class="btn btn-primary" id="lottoLeastButton" data-placement="bottom" data-content="Least picked">
+                    <button data-bind="click:  function(most_common, game) { lotto.getNumbers(false, 'viking_lotto')}" type="button" class="btn btn-primary" id="lottoLeastButton" data-placement="bottom" data-content="Least picked">
                         <span class="glyphicon glyphicon-chevron-down"></span>
                     </button>
 
@@ -142,6 +144,7 @@
             numbers: ko.observableArray([]),
             start_date: ko.observable(new Date()),
             end_date: ko.observable(new Date()),
+            resolution : ko.observableArray(["low", "medium", "high"]),
             init: function () {
                 $("#successAlert").hide();
                 $("#warningAlert").hide();
@@ -153,10 +156,11 @@
                     self.lotto.numbers.removeAll();
                 }
             },
-            getLeastLottoNumbers : function(){
+            getNumbers : function(most_common, game){
                 var start_date = $("#startDatePicker").val();
                 var end_date = $("#endDatePicker").val();
-                var url = "/api/lotto?game=viking_lotto&start_date=" + start_date+"&end_date="+end_date+"&most_common=false";
+                var resolution = $("#resolution").val();
+                var url = "/api/lotto?game="+game+"&start_date=" + start_date+"&end_date="+end_date+"&most_common="+most_common+"&resolution="+resolution;
                 $("#successAlert").hide();
                 $("#warningAlert").hide();
                 $("#fetchingAlert").show();
@@ -191,49 +195,7 @@
                     $("#lottoMostButton").prop("disabled", false);
                     $("#lottoLeastButton").prop("disabled", false);
                 });
-            },
-            getMostLottNumbers : function(){
-                var start_date = $("#startDatePicker").val();
-                var end_date = $("#endDatePicker").val();
-                var url = "/api/lotto?game=viking_lotto&start_date=" + start_date+"&end_date="+end_date+"&most_common=true";
-                $("#successAlert").hide();
-                $("#warningAlert").hide();
-                $("#fetchingAlert").show();
-                $("#lottoMostButton").prop("disabled", true);
-                $("#lottoLeastButton").prop("disabled", true);
-                $.getJSON(url, function (data) {
-                    self.lotto.name(data.name);
-                    self.lotto.start_date(data.start_date);
-                    self.lotto.end_date(data.end_date);
-                    if(self.lotto.numbers){
-                        self.lotto.numbers.removeAll();
-                    }
-
-                    data.numbers.forEach(function (row) {
-                        self.lotto.numbers.push(new LottoRow(row));
-                    });
-                }).done(function(){
-                    $("#successAlert").show();
-                    $("#warningAlert").hide();
-                    $("#fetchingAlert").hide();
-                    setTimeout(function(){
-                        $("#successAlert").fadeOut;
-                    } ,6000);
-
-                }).fail(function(){
-                    $("#successAlert").hide();
-                    $("#warningAlert").show();
-                    $("#fetchingAlert").hide();
-                    setTimeout(function(){
-                        $("#warningAlert").fadeOut();
-                    } ,6000);
-                }).always(function(){
-                    $("#lottoMostButton").prop("disabled", false);
-                    $("#lottoLeastButton").prop("disabled", false);
-                });
             }
-
-
         };
 
 
@@ -252,7 +214,7 @@
             $("#warningAlert").hide();
             $("#fetchingAlert").hide();
 
-        }
+        };
     }
 
 

@@ -88,6 +88,7 @@
         <div>
             <form class="form-inline" role="form">
                 <div class="form-group">
+                    <input type="hidden" id="gameType" value="Lotto"/>
                     <label for="startDatePicker">Start:</label>
                     <input class="form-control" type="date" id="startDatePicker"  min="1986-01-01"/>
                     <label for="endDatePicker">Slutt:</label>
@@ -140,8 +141,9 @@
 <script type="text/javascript">
     function LottoViewModel(name) {
         var self = this;
+        var game = $("#gameType").val();
         this.lotto = {
-            name: ko.observable("Lotto"),
+            name: ko.observable(game),
             numbers: ko.observableArray([]),
             start_date: ko.observable(new Date()),
             end_date: ko.observable(new Date()),
@@ -160,7 +162,7 @@
             getNumbers : function(most_common, game){
                 var start_date = $("#startDatePicker").val();
                 var end_date = $("#endDatePicker").val();
-                var resolution = $("#resulution").val();
+                var resolution = $("#resolution").val();
                 var url = "/api/lotto?game="+game+"&start_date=" + start_date+"&end_date="+end_date+"&most_common="+most_common+"&resolution="+resolution;
                 $("#successAlert").hide();
                 $("#warningAlert").hide();
@@ -204,13 +206,6 @@
             var lottoViewModel = new LottoViewModel();
             ko.applyBindings(lottoViewModel);
 
-            $("#lottoButton").click(function(){
-                lottoViewModel.lotto.init(startDate, endDate);
-            });
-
-            $("#lottoButtonClear").click(function(){
-                lottoViewModel.lotto.removeAll();
-            });
             $("#successAlert").hide();
             $("#warningAlert").hide();
             $("#fetchingAlert").hide();
