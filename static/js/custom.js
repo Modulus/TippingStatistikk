@@ -7,15 +7,15 @@ $(document).ready(function(){
 //    $("#extra").preventDefault();
 //    $("#keno").preventDefault();
 
-    $("#lottoLeastButton").click(function(event){
+//   $("#lottoLeastButton").click(function(event){
 
-        alert("Clicked");
-        event.preventDefault();
-        lottoViewModel = new LottoViewModel();
+  //      alert("Clicked");
+    //    event.preventDefault();
+     //   lottoViewModel = new LottoViewModel();
 
-        ko.applyBindings(lottoViewModel);
-        lottoViewModel.init();
-    });
+      //  ko.applyBindings(lottoViewModel);
+       // lottoViewModel.init();
+    //});
 
 //    $("#fromDatePicker").datepicker();
 
