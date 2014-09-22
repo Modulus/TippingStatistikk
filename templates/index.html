@@ -89,9 +89,9 @@
             <form class="form-inline" role="form">
                 <div class="form-group">
                     <label for="lottoStartDatePicker">Start:</label>
-                    <input class="form-control" type="date" id="lottoStartDatePicker"/>
-                    <label for="lottoEndDatePicker">End:</label>
-                    <input class="form-control" type="date" id="lottoEndDatePicker"/>
+                    <input class="form-control" type="date" id="lottoStartDatePicker"  min="1986-01-01"/>
+                    <label for="lottoEndDatePicker">Slutt:</label>
+                    <input class="form-control" type="date" id="lottoEndDatePicker" min="1993-01-01"/>
                     <!--<button type="button" class="btn btn-primary" id="lottoButton" data-toggle="popover" data-placement="bottom" data-content="Fetch numbers">
                         <span class="glyphicon glyphicon glyphicon-refresh"></span>
                     </button>-->
@@ -134,6 +134,7 @@
 <script src="{{url_for('static', filename='js/knockout-3.1.0.js')}}"></script>
 <script src="{{url_for('static', filename='lib/bootstrap-3.1.1-dist/js/bootstrap.min.js')}}"></script>
 <script src="{{url_for('static', filename='lib/datepicker/js/bootstrap-datepicker.js')}}"></script>
+<script src="{{url_for('static', filename='js/custom.js')}}"></script>
 <script type="text/javascript">
     function LottoViewModel(name) {
         var self = this;
@@ -241,9 +242,6 @@
             $("#successAlert").hide();
             $("#warningAlert").hide();
             $("#fetchingAlert").hide();
-
-            $("#lottoStartDatePicker").val(new Date());
-            $("#lottoEndDatePicker").val(new Date());
 
         }
     }

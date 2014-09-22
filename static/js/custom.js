@@ -1,7 +1,25 @@
 /**
  * Created by Modulus on 25/04/2014.
  */
+
+
 $(document).ready(function(){
+
+    var getTodaysDate = (function () {
+        var local = new Date();
+        return local.toJSON().slice(0, 10);
+    });
+
+    var getOlderDate = (function(year){
+        var local = new Date();
+        local.setYear(year)
+        return local.toJSON().slice(0,10);
+    });
+
+
+    $("#lottoStartDatePicker").val(getOlderDate(2004));
+    $("#lottoEndDatePicker").val(getTodaysDate);
+
 //    $("#lotto").preventDefault();
 //    $("#viking_lotto").preventDefault();
 //    $("#extra").preventDefault();
