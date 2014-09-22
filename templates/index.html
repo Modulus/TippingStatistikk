@@ -88,20 +88,21 @@
         <div>
             <form class="form-inline" role="form">
                 <div class="form-group">
-                    <label for="lottoStartDatePicker">Start:</label>
-                    <input class="form-control" type="date" id="lottoStartDatePicker"  min="1986-01-01"/>
-                    <label for="lottoEndDatePicker">Slutt:</label>
-                    <input class="form-control" type="date" id="lottoEndDatePicker" min="1993-01-01"/>
+                    <label for="startDatePicker">Start:</label>
+                    <input class="form-control" type="date" id="startDatePicker"  min="1986-01-01"/>
+                    <label for="endDatePicker">Slutt:</label>
+                    <input class="form-control" type="date" id="endDatePicker" min="1993-01-01"/>
 
                     <button data-bind="click: lotto.removeAll" type="button" class="btn btn-danger" id="lottoButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                     </button>
-                    <button data-bind="click: lotto.getLeastLottoNumbers" type="button" class="btn btn-primary" id="lottoLeastButton" data-placement="bottom" data-content="Least picked">
+                    <button data-bind="click: lotto.getMostLottNumbers" type="button" class="btn btn-success" id="lottoMostButton" data-placement="bottom" data-content="Least picked">
                         <span class="glyphicon glyphicon-chevron-up"></span>
                     </button>
-                    <button data-bind="click: lotto.getMostLottNumbers" type="button" class="btn btn-success" id="lottoMostButton" data-placement="bottom" data-content="Least picked">
+                    <button data-bind="click: lotto.getLeastLottoNumbers" type="button" class="btn btn-primary" id="lottoLeastButton" data-placement="bottom" data-content="Least picked">
                         <span class="glyphicon glyphicon-chevron-down"></span>
                     </button>
+
                 </div>
             </form>
 
@@ -153,8 +154,8 @@
                 }
             },
             getLeastLottoNumbers : function(){
-                var start_date = $("#lottoStartDatePicker").val();
-                var end_date = $("#lottoEndDatePicker").val();
+                var start_date = $("#startDatePicker").val();
+                var end_date = $("#endDatePicker").val();
                 var url = "/api/lotto?game=lotto&start_date=" + start_date+"&end_date="+end_date+"&most_common=false";
                 $("#successAlert").hide();
                 $("#warningAlert").hide();
@@ -187,8 +188,8 @@
                 });
             },
             getMostLottNumbers : function(){
-                var start_date = $("#lottoStartDatePicker").val();
-                var end_date = $("#lottoEndDatePicker").val();
+                var start_date = $("#startDatePicker").val();
+                var end_date = $("#endDatePicker").val();
                 var url = "/api/lotto?game=lotto&start_date=" + start_date+"&end_date="+end_date+"&most_common=true";
                 $("#successAlert").hide();
                 $("#warningAlert").hide();
@@ -255,7 +256,7 @@
         this.cell7 = data[6];
     }
 
-    lottoViewModel = new LottoViewModel();
+    lottoViewModel = new LottoViewModel("lotto");
     lottoViewModel.init();
 
 </script>

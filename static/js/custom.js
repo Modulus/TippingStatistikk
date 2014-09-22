@@ -23,11 +23,11 @@ $(document).ready(function(){
     });
 
 
-    $("#lottoStartDatePicker").val(getOlderDate(2004));
-    $("#lottoEndDatePicker").val(getTodaysDate);
+    $("#startDatePicker").val(getOlderDate(2004));
+    $("#endDatePicker").val(getTodaysDate);
 
-    $("#lottoStartDatePicker").attr("max", getYesterDay());
-    $("#lottoEndDatePicker").attr("max", getTodaysDate());
+    $("#startDatePicker").attr("max", getYesterDay());
+    $("#endDatePicker").attr("max", getTodaysDate());
 
 
 //    $("#lotto").preventDefault();

@@ -48,10 +48,10 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/">Lotto</a></li>
+                <li ><a href="/">Lotto</a></li>
                 <li><a href="/viking">Viking Lotto</a></li>
-                <li><a href="/extra">Extra</a></li>
-                <li  class="active"><a href="/keno">Keno</a></li>
+                <li ><a href="/extra">Extra</a></li>
+                <li class="active"><a href="/keno">Keno</a></li>
                 <li><a href="/about">Om siden</a></li>
             </ul>
 
@@ -62,17 +62,14 @@
 
 <div class="container">
 
-
     <div class="jumbotron">
-        <div class="panel panel-default">
 
+
+        <div class="panel panel-default">
             <!-- Default panel contents -->
-            <div class="panel-heading"><span data-bind="text: keno.name"></span></div>
-            <!--<div class="panel-body">-->
-            <!--<p>Viking Lotto</p>-->
-            <!--</div>-->
+            <div class="panel-heading"><span data-bind="text: lotto.name"></span></div>
             <table class="table">
-                <tbody data-bind="foreach: keno.numbers">
+                <tbody data-bind="foreach: lotto.numbers">
                 <tr>
                     <td data-bind="text: cell1"></td>
                     <td data-bind="text: cell2"></td>
@@ -85,25 +82,45 @@
 
                 </tbody>
             </table>
+
         </div>
+
         <div>
             <form class="form-inline" role="form">
                 <div class="form-group">
-                    <label for="kenoStartDatePicker">Start:</label>
-                    <input class="form-control" type="date" value="01/01/1983" id="kenoStartDatePicker"/>
-                    <label for="kenoEndDatePicker">End:</label>
-                    <input class="form-control" type="date" placeholder="[Enter end date]" id="kenoEndDatePicker"/>
-                    <button type="button" class="btn btn-primary" id="kenoButton" data-toggle="popover" data-placement="bottom" data-content="Fetch numbers">
-                        <span class="glyphicon glyphicon glyphicon-refresh"></span>
-                    </button>
-                    <button type="button" class="btn btn-danger" id="kenoButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
+                    <label for="startDatePicker">Start:</label>
+                    <input class="form-control" type="date" id="startDatePicker"  min="1986-01-01"/>
+                    <label for="endDatePicker">Slutt:</label>
+                    <input class="form-control" type="date" id="endDatePicker" min="1993-01-01"/>
+
+                    <button data-bind="click: lotto.removeAll" type="button" class="btn btn-danger" id="lottoButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                     </button>
+                    <button data-bind="click: lotto.getMostLottNumbers" type="button" class="btn btn-success" id="lottoMostButton" data-placement="bottom" data-content="Least picked">
+                        <span class="glyphicon glyphicon-chevron-up"></span>
+                    </button>
+                    <button data-bind="click: lotto.getLeastLottoNumbers" type="button" class="btn btn-primary" id="lottoLeastButton" data-placement="bottom" data-content="Least picked">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </button>
+
                 </div>
             </form>
 
         </div>
+        <div>
+            <span>&nbsp;</span>
+        </div>
+        <div id="fetchingAlert" class="alert alert-info" role="alert">
+            <strong>Info!</strong> Henter kupong-data, vennligst vent...
+        </div>
+        <div id="warningAlert" class="alert alert-danger" role="alert">
+            <strong>Feil!</strong> Noe gikk galt, har du fylt ut til/fra dato?
+        </div>
+        <div id="successAlert" class="alert alert-success" role="alert">
+            <strong>Suksess!</strong> Kupongen er utfylt
+        </div>
     </div>
+
 </div>
 </div>
 <!-- /container -->
@@ -115,19 +132,34 @@
 <script src="{{url_for('static', filename='js/jquery-2.1.0.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/knockout-3.1.0.js')}}"></script>
 <script src="{{url_for('static', filename='lib/bootstrap-3.1.1-dist/js/bootstrap.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/custom.js')}}"></script>
 <script src="{{url_for('static', filename='lib/datepicker/js/bootstrap-datepicker.js')}}"></script>
+<script src="{{url_for('static', filename='js/custom.js')}}"></script>
 <script type="text/javascript">
     function LottoViewModel(name) {
         var self = this;
         this.lotto = {
-            name: ko.observable("Lotto"),
+            name: ko.observable("Keno"),
             numbers: ko.observableArray([]),
-            start_date: ko.observable(""),
-            end_date: ko.observable(""),
-            init: function (start_date, end_date) {
-                var url = "/api/lotto?game=lotto&start_date=" + start_date+"&end_date="+end_date;
-                alert(url);
+            start_date: ko.observable(new Date()),
+            end_date: ko.observable(new Date()),
+            init: function () {
+                $("#successAlert").hide();
+                $("#warningAlert").hide();
+                $("#fetchingAlert").hide();
+
+            },
+            removeAll : function(){
+                if(self.lotto.numbers){
+                    self.lotto.numbers.removeAll();
+                }
+            },
+            getLeastLottoNumbers : function(){
+                var start_date = $("#startDatePicker").val();
+                var end_date = $("#endDatePicker").val();
+                var url = "/api/lotto?game=keno&start_date=" + start_date+"&end_date="+end_date+"&most_common=false";
+                $("#successAlert").hide();
+                $("#warningAlert").hide();
+                $("#fetchingAlert").show();
                 $.getJSON(url, function (data) {
                     self.lotto.name(data.name);
                     self.lotto.start_date(data.start_date);
@@ -139,140 +171,76 @@
                     data.numbers.forEach(function (row) {
                         self.lotto.numbers.push(new LottoRow(row));
                     });
+                }).done(function(){
+                    $("#successAlert").show();
+                    $("#warningAlert").hide();
+                    $("#fetchingAlert").hide();
+                    setTimeout(function(){
+                        $("#successAlert").fadeOut();
+                    }, 6000)
+                }).fail(function(){
+                    $("#successAlert").hide();
+                    $("#warningAlert").show();
+                    $("#fetchingAlert").hide();
+                    setTimeout(function(){
+                        $("#warningAlert").fadeOut();
+                    },6000);
                 });
             },
-            removeAll : function(){
-                if(self.lotto.numbers){
-                    self.lotto.numbers.removeAll();
-                }
+            getMostLottNumbers : function(){
+                var start_date = $("#startDatePicker").val();
+                var end_date = $("#endDatePicker").val();
+                var url = "/api/lotto?game=keno&start_date=" + start_date+"&end_date="+end_date+"&most_common=true";
+                $("#successAlert").hide();
+                $("#warningAlert").hide();
+                $("#fetchingAlert").show();
+                $.getJSON(url, function (data) {
+                    self.lotto.name(data.name);
+                    self.lotto.start_date(data.start_date);
+                    self.lotto.end_date(data.end_date);
+                    if(self.lotto.numbers){
+                        self.lotto.numbers.removeAll();
+                    }
+
+                    data.numbers.forEach(function (row) {
+                        self.lotto.numbers.push(new LottoRow(row));
+                    });
+                }).done(function(){
+                    $("#successAlert").show();
+                    $("#warningAlert").hide();
+                    $("#fetchingAlert").hide();
+                    setTimeout(function(){
+                        $("#successAlert").fadeOut;
+                    } ,6000);
+
+                }).fail(function(){
+                    $("#successAlert").hide();
+                    $("#warningAlert").show();
+                    $("#fetchingAlert").hide();
+                    setTimeout(function(){
+                        $("#warningAlert").fadeOut();
+                    } ,6000);
+                });
             }
 
-        };
-        this.viking_lotto = {
-            name: ko.observable("Viking lotto"),
-            numbers: ko.observableArray([]),
-            start_date: ko.observable(""),
-            end_date: ko.observable(""),
-            init: function () {
-                var url = "/api/lotto?game=viking_lotto"
-                $.getJSON(url, function (data) {
-                    self.viking_lotto.name(data.name);
-                    self.viking_lotto.start_date(data.start_date);
-                    self.viking_lotto.end_date(data.end_date);
-                    if(self.viking_lotto.numbers){
-                        self.viking_lotto.numbers.removeAll();
-                    }
-                    data.numbers.forEach(function (row) {
-                        self.viking_lotto.numbers.push(new LottoRow(row));
-                    });
-                });
-            },
-            removeAll : function(){
-                if(self.viking_lotto.numbers){
-                    self.viking_lotto.numbers.removeAll();
-                }
-            }
+
         };
 
-        this.extra = {
-            name: ko.observable("Extra"),
-            numbers: ko.observableArray([]),
-            start_date: ko.observable(""),
-            end_date: ko.observable(""),
-            init: function () {
-                var url = "/api/lotto?game=extra"
-                $.getJSON(url, function (data) {
-                    self.extra.name(data.name);
-                    self.extra.start_date(data.start_date);
-                    self.extra.end_date(data.end_date);
-                    if(self.extra.numbers){
-                        self.extra.numbers.removeAll();
-                    }
-                    data.numbers.forEach(function (row) {
-                        self.extra.numbers.push(new LottoRow(row));
-                    });
-                });
-            },
-            removeAll : function(){
-                if(self.extra.numbers){
-                    self.extra.numbers.removeAll();
-                }
-            }
-        };
-
-        this.keno = {
-            name: ko.observable("Keno"),
-            numbers: ko.observableArray([]),
-            start_date: ko.observable(""),
-            end_date: ko.observable(""),
-            init: function () {
-                var url = "/api/lotto?game=keno"
-                $.getJSON(url, function (data) {
-                    self.keno.name(data.name);
-                    self.keno.start_date(data.start_date);
-                    self.keno.end_date(data.end_date);
-                    if(self.keno.numbers){
-                        self.keno.numbers.removeAll();
-                    }
-                    data.numbers.forEach(function (row) {
-                        self.keno.numbers.push(new LottoRow(row));
-                    });
-                });
-            },
-            removeAll : function(){
-                if(self.keno.numbers){
-                    self.keno.numbers.removeAll();
-                }
-            }
-        };
 
         this.init = function () {
             var lottoViewModel = new LottoViewModel();
             ko.applyBindings(lottoViewModel);
 
             $("#lottoButton").click(function(){
-                var startDate = $("#lottoStartDatePicker").val();
-                var endDate = $("#lottoEndDatePicker").val();
                 lottoViewModel.lotto.init(startDate, endDate);
             });
 
             $("#lottoButtonClear").click(function(){
                 lottoViewModel.lotto.removeAll();
             });
-
-            $("#vikingButton").click(function(){
-                lottoViewModel.viking_lotto.init();
-            });
-
-            $("#vikingButtonClear").click(function(){
-                lottoViewModel.viking_lotto.removeAll();
-            });
-
-            $("#extraButton").click(function(){
-                lottoViewModel.extra.init();
-            });
-
-            $("#extraButtonClear").click(function(){
-                lottoViewModel.extra.removeAll();
-            });
-
-
-            $("#kenoButton").click(function(){
-                lottoViewModel.keno.init();
-            });
-
-            $("#kenoButtonClear").click(function(){
-                lottoViewModel.keno.removeAll();
-            });
-
-
-
-
-
-//            lottoViewModel.viking_lotto.init();
-//            lottoViewModel.extra.init();
-//            lottoViewModel.keno.init();
-
+            $("#successAlert").hide();
+            $("#warningAlert").hide();
+            $("#fetchingAlert").hide();
 
         }
     }
@@ -288,7 +256,7 @@
         this.cell7 = data[6];
     }
 
-    lottoViewModel = new LottoViewModel();
+    lottoViewModel = new LottoViewModel("keno");
     lottoViewModel.init();
 
 </script>
