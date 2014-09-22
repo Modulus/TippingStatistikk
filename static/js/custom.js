@@ -30,8 +30,6 @@ $(document).ready(function(){
     $("#lottoEndDatePicker").attr("max", getTodaysDate());
 
 
-    getYesterDay();
-
 //    $("#lotto").preventDefault();
 //    $("#viking_lotto").preventDefault();
 //    $("#extra").preventDefault();
