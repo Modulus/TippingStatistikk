@@ -1,7 +1,7 @@
 var app = (function(app){
     app.GameViewModel = function() {
         var self = this;
-        var name = $("#gameType").val()
+        var name = $("#gameType").val();
         self.name = ko.observable(name);
         self.numbers = ko.observableArray([]);
         self.start_date = ko.observable(new Date());
@@ -31,6 +31,7 @@ var app = (function(app){
             $("#fetchingAlert").show();
             $("#mostButton").prop("disabled", true);
             $("#leastButton").prop("disabled", true);
+            $("#clearButton").prop("disabled", true);
             $.getJSON(url, function (data) {
                 self.name(data.name);
                 self.start_date(data.start_date);
@@ -59,6 +60,7 @@ var app = (function(app){
             }).always(function(){
                 $("#mostButton").prop("disabled", false);
                 $("#leastButton").prop("disabled", false);
+                $("#clearButton").prop("disabled", false);
             })
         };
     };
