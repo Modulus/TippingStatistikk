@@ -4,6 +4,7 @@ python:
 install:
   - "pip install -r requirements.txt"
 script:
-    - py.test tests --pep8 tests -v --cov tests --cov-report term-missing
- after_success:
+  py.test tests
+after_success:
   - coveralls
+
