@@ -18,9 +18,9 @@ class ExtractTest(TestCase):
                  , 45, 42, 62, 49, 49, 50, 49, 37, 35, 31, 49, 51, 42, 48, 46, 49, 43, 33, 29, 28, 30]]
 
     def test_extract(self):
-        start_date = datetime.date(datetime(1986, 01, 01))
+        start_date = datetime.date(datetime(1986, 1, 1))
 
-        current_date = datetime.date(datetime(2014, 04, 19))
+        current_date = datetime.date(datetime(2014, 4, 19))
 
         extractor.read_lists = Mock(return_value=self.lists)
         numbers = extractor.extract_most_common(7, start_date, current_date, "https://www.fjas.no")
