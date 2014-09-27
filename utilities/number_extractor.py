@@ -2,7 +2,7 @@ from collections import Counter
 from datetime import datetime
 import functools
 import json
-import urllib2
+import urllib
 from itertools import permutations
 import operator
 from time import mktime
@@ -32,7 +32,7 @@ def read_lists(start_date, end_date, url):
 
     base_url = "{0}?fromDate={1}&toDate={2}&".format(url, start_date_string, end_date_string)
 
-    stream = urllib2.urlopen(base_url)
+    stream = urllib.urlopen(base_url)
 
     content = stream.readlines()
 
