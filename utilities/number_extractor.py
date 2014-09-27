@@ -2,7 +2,7 @@ from collections import Counter
 from datetime import datetime
 import functools
 import json
-import urllib
+import urllib.request as urllib
 from itertools import permutations
 import operator
 from time import mktime
