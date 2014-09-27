@@ -67,9 +67,9 @@
 
         <div class="panel panel-default">
             <!-- Default panel contents -->
-            <div class="panel-heading"><span data-bind="text: lotto.name"></span></div>
+            <div class="panel-heading"><span data-bind="text: name"></span></div>
             <table class="table">
-                <tbody data-bind="foreach: lotto.numbers">
+                <tbody data-bind="foreach: numbers">
                 <tr>
                     <td data-bind="text: cell1"></td>
                     <td data-bind="text: cell2"></td>
@@ -88,20 +88,26 @@
         <div>
             <form class="form-inline" role="form">
                 <div class="form-group">
+                    <input id="gameType" type="hidden" value="Viking Lotto"/>
                     <label for="startDatePicker">Start:</label>
-                    <input class="form-control" type="date" id="startDatePicker"  min="1986-01-01"/>
+                    <input class="form-control" type="date" id="startDatePicker" min="1986-01-01"/>
                     <label for="endDatePicker">Slutt:</label>
                     <input class="form-control" type="date" id="endDatePicker" min="1993-01-01"/>
                     <label for="resolution">Oppløsning:</label>
-                    <select class="form-control" id="resolution" data-bind="options: lotto.resolution"></select>
+                    <select class="form-control" id="resolution" data-bind="options: resolution"></select>
 
-                    <button data-bind="click: lotto.removeAll" type="button" class="btn btn-danger" id="lottoButtonClear" data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
+                    <button data-bind="click: removeAll" type="button" class="btn btn-danger" id="clearButton"
+                            data-toggle="popover" data-placement="bottom" data-content="Clear numbers">
                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                     </button>
-                    <button data-bind="click: function(most_common, game) { lotto.getNumbers(true, 'viking_lotto')}" type="button" class="btn btn-success" id="lottoMostButton" data-placement="bottom" data-content="Least picked">
+                    <button data-bind="click: function(most_common, game) { getNumbers(true, 'viking_lotto')}"
+                            type="button" class="btn btn-success" id="mostButton" data-placement="bottom"
+                            data-content="Least picked">
                         <span class="glyphicon glyphicon-chevron-up"></span>
                     </button>
-                    <button data-bind="click:  function(most_common, game) { lotto.getNumbers(false, 'viking_lotto')}" type="button" class="btn btn-primary" id="lottoLeastButton" data-placement="bottom" data-content="Least picked">
+                    <button data-bind="click:  function(most_common, game) { getNumbers(false, 'viking_lotto')}"
+                            type="button" class="btn btn-primary" id="meastButton" data-placement="bottom"
+                            data-content="Least picked">
                         <span class="glyphicon glyphicon-chevron-down"></span>
                     </button>
 
@@ -136,105 +142,16 @@
 <script src="{{url_for('static', filename='lib/bootstrap-3.1.1-dist/js/bootstrap.min.js')}}"></script>
 <script src="{{url_for('static', filename='lib/datepicker/js/bootstrap-datepicker.js')}}"></script>
 <script src="{{url_for('static', filename='js/custom.js')}}"></script>
+<script src="{{url_for('static', filename='js/viewmodel.js')}}"></script>
 <script type="text/javascript">
-    function LottoViewModel(name) {
-        var self = this;
-        this.lotto = {
-            name: ko.observable("Viking Lotto"),
-            numbers: ko.observableArray([]),
-            start_date: ko.observable(new Date()),
-            end_date: ko.observable(new Date()),
-            resolution : ko.observableArray(["low", "medium", "high"]),
-            init: function () {
-                $("#successAlert").hide();
-                $("#warningAlert").hide();
-                $("#fetchingAlert").hide();
-
-            },
-            removeAll : function(){
-                if(self.lotto.numbers){
-                    self.lotto.numbers.removeAll();
-                    window.scrollTo(0,0);
-                }
-            },
-            getNumbers : function(most_common, game){
-                var start_date = $("#startDatePicker").val();
-                var end_date = $("#endDatePicker").val();
-                var resolution = $("#resolution").val();
-                var url = "/api/lotto?game="+game+"&start_date=" + start_date+"&end_date="+end_date+"&most_common="+most_common+"&resolution="+resolution;
-                $("#successAlert").hide();
-                $("#warningAlert").hide();
-                $("#fetchingAlert").show();
-                $("#lottoMostButton").prop("disabled", true);
-                $("#lottoLeastButton").prop("disabled", true);
-                $.getJSON(url, function (data) {
-                    self.lotto.name(data.name);
-                    self.lotto.start_date(data.start_date);
-                    self.lotto.end_date(data.end_date);
-                    if(self.lotto.numbers){
-                        self.lotto.numbers.removeAll();
-                    }
-
-                    data.numbers.forEach(function (row) {
-                        self.lotto.numbers.push(new LottoRow(row));
-                    });
-                }).done(function(){
-                    $("#successAlert").show();
-                    $("#warningAlert").hide();
-                    $("#fetchingAlert").hide();
-                    setTimeout(function(){
-                        $("#successAlert").fadeOut();
-                    }, 6000)
-                }).fail(function(){
-                    $("#successAlert").hide();
-                    $("#warningAlert").show();
-                    $("#fetchingAlert").hide();
-                    setTimeout(function(){
-                        $("#warningAlert").fadeOut();
-                    },6000);
-                }).always(function(){
-                    $("#lottoMostButton").prop("disabled", false);
-                    $("#lottoLeastButton").prop("disabled", false);
-                });
-            }
-        };
-
-
-        this.init = function () {
-            var lottoViewModel = new LottoViewModel();
-            ko.applyBindings(lottoViewModel);
-
-            $("#lottoButton").click(function(){
-                lottoViewModel.lotto.init(startDate, endDate);
-            });
-
-            $("#lottoButtonClear").click(function(){
-                lottoViewModel.lotto.removeAll();
-            });
-            $("#successAlert").hide();
-            $("#warningAlert").hide();
-            $("#fetchingAlert").hide();
-
-        };
-    }
-
-
-    function LottoRow(data) {
-        this.cell1 = data[0];
-        this.cell2 = data[1];
-        this.cell3 = data[2];
-        this.cell4 = data[3];
-        this.cell5 = data[4];
-        this.cell6 = data[5];
-        this.cell7 = data[6];
-    }
-
-    lottoViewModel = new LottoViewModel("viking_lotto");
-    lottoViewModel.init();
-
+    $(function () {
+        $("#successAlert").hide();
+        $("#warningAlert").hide();
+        $("#fetchingAlert").hide();
+        var vm = new app.GameViewModel();
+        ko.applyBindings(vm);
+    });
 </script>
-
-
 
 
 </body>

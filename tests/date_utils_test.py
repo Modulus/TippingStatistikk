@@ -8,8 +8,8 @@ __author__ = 'Modulus'
 class MainTests(TestCase):
 
     def setUp(self):
-        self.start = datetime.date(datetime(1986, 01, 01))
-        self.end = datetime.date(datetime(2014, 03, 24))
+        self.start = datetime.date(datetime(1986, 1, 1))
+        self.end = datetime.date(datetime(2014, 3, 24))
 
     def test_timedelta(self):
         dates = date_utils.DateUtils.get_dates(self.start)
@@ -27,11 +27,5 @@ class MainTests(TestCase):
         self.assertEquals(2016, dates[7].year)
         self.assertEquals(2022, dates[8].year)
 
-    def test_sum(self):
-        sum = 0
-        for i in range(0, 10):
-            sum += i
-
-        print sum
 
 

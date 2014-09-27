@@ -18,9 +18,9 @@ class ExtractTest(TestCase):
                  , 45, 42, 62, 49, 49, 50, 49, 37, 35, 31, 49, 51, 42, 48, 46, 49, 43, 33, 29, 28, 30]]
 
     def test_extract(self):
-        start_date = datetime.date(datetime(1986, 01, 01))
+        start_date = datetime.date(datetime(1986, 1, 1))
 
-        current_date = datetime.date(datetime(2014, 04, 19))
+        current_date = datetime.date(datetime(2014, 4, 19))
 
         extractor.read_lists = Mock(return_value=self.lists)
         numbers = extractor.extract_most_common(7, start_date, current_date, "https://www.fjas.no")
@@ -41,9 +41,9 @@ class ExtractTest(TestCase):
         self.assertEquals([1, 4, 7], elements)
 
     def test_extract_least_common(self):
-        start_date = datetime.date(datetime(1986, 01, 01))
+        start_date = datetime.date(datetime(1986, 1, 1))
 
-        current_date = datetime.date(datetime(2014, 04, 19))
+        current_date = datetime.date(datetime(2014, 4, 19))
 
         extractor.read_lists = Mock(return_value=self.lists)
         numbers = extractor.extract_least_common(7, start_date, current_date, "https://www.fjas.no")
@@ -51,9 +51,9 @@ class ExtractTest(TestCase):
         self.assertListEqual([10, 15, 29, 33, 20, 12, 19], numbers)
 
     def test_exract_most_common_flag_false(self):
-        start_date = datetime.date(datetime(1986, 01, 01))
+        start_date = datetime.date(datetime(1986, 1, 1))
 
-        current_date = datetime.date(datetime(2014, 04, 19))
+        current_date = datetime.date(datetime(2014, 4, 19))
 
         extractor.read_lists = Mock(return_value=self.lists)
         numbers = extractor.extract(7, 7, start_date, current_date, "https://www.fjas.no", most_common=False)
@@ -61,9 +61,9 @@ class ExtractTest(TestCase):
         self.assertListEqual([[10, 12, 15, 19, 20, 29, 33]], numbers)
 
     def test_extract_most_common_flag_true(self):
-        start_date = datetime.date(datetime(1986, 01, 01))
+        start_date = datetime.date(datetime(1986, 1, 1))
 
-        current_date = datetime.date(datetime(2014, 04, 19))
+        current_date = datetime.date(datetime(2014, 4, 19))
 
         extractor.read_lists = Mock(return_value=self.lists)
         numbers = extractor.extract(7, 7, start_date, current_date, "https://www.fjas.no", most_common=True)
