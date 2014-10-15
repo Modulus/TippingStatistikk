@@ -1,6 +1,6 @@
 from datetime import datetime
 from unittest import TestCase
-import urllib.request as urllib2
+import urllib2
 from mock import Mock
 from utilities.number_extractor import read_lists
 
