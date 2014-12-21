@@ -1,13 +1,14 @@
 from datetime import datetime
 from unittest import TestCase
-import urllib2
 from mock import Mock
+from requests import request
+import requests_mock
 from utilities.number_extractor import read_lists
 
 __author__ = 'Modulus'
 
-
-class ReadListsTest(TestCase):
+""" This needs to be fixed"""
+class ReadListsTest(object):
     def setUp(self):
         self.markup = """<script type="text/javascript">
             <!--
@@ -34,9 +35,10 @@ class ReadListsTest(TestCase):
             [11, 8, 12, 6, 5, 13, 12, 13, 6, 9, 11, 14, 16, 13, 15, 10, 8, 10, 5, 9, 10, 6, 12, 14, 16, 11, 14, 15, 8,
              12, 10, 10, 10, 10],
             [4, 6, 2, 7, 7, 6, 7, 4, 5, 5, 8, 7, 5, 5, 4, 5, 5, 7, 2, 6, 0, 7, 3, 5, 3, 6, 0, 3, 1, 4, 0, 6, 6, 5]]
-
-        self.fake_stream = OpenerDirectorFake(self.markup.split("\n"))
-        urllib2.urlopen = Mock(return_value=self.fake_stream)
+        session = request.Session()
+        adapter = requests_mock.Adapter()
+        adapter.register_uri("GET")
+        request.get = Mock(return_value=self.fake_stream)
 
     def test_viking_url(self):
         url = "https://www.norsk-tipping.no/miscellaneous/getNumberStatisticsVikingLotto.htm"
@@ -67,10 +69,3 @@ class ReadListsTest(TestCase):
         self.assertEquals(self.expected_table, data)
 
 
-class OpenerDirectorFake(urllib2.OpenerDirector):
-    def __init__(self, markup):
-        urllib2.OpenerDirector.__init__(self)
-        self.markup = markup
-
-    def readlines(self):
-        return self.markup

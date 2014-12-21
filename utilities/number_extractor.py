@@ -6,11 +6,37 @@ import urllib2
 from itertools import permutations
 import operator
 from time import mktime
+import zlib
+import requests
 from utilities.date_utils import dateformat
 
 
 __author__ = 'Modulus'
 
+
+def create_list(ex_data):
+    """
+    :param ex_data: A fucked up string, that needs to be converted to three list, that again contains lists
+    :return: Returns these three nested lists as three lists of ints in a list.
+    """
+    step1 = ex_data.split("]")
+    all_lists = []
+    for element in step1:
+        element = element.replace("[", "")
+        element = element.replace("]", "")
+        all_lists.append(element.split(","))
+
+    # Map these string lists to lists of ints
+    m_list = []
+    for curr_list in all_lists:
+        # Remove empty values in list before converting
+        if '' in curr_list:
+            curr_list.remove('')
+        res = map(int, curr_list)
+        if res:
+            m_list.append(res)
+
+    return m_list
 
 def read_lists(start_date, end_date, url):
     """
@@ -18,6 +44,9 @@ def read_lists(start_date, end_date, url):
     The second array is amount of times this number has been selected
     The third array is how many times this number has been additional numbers
     """
+
+    LIST_FOUND = False
+    FINISHED_READING = False
 
     if start_date and type(start_date) != datetime:
         start = datetime.fromtimestamp(mktime(start_date))
@@ -32,15 +61,29 @@ def read_lists(start_date, end_date, url):
 
     base_url = "{0}?fromDate={1}&toDate={2}&".format(url, start_date_string, end_date_string)
 
-    stream = urllib2.urlopen(base_url)
+    data = requests.get(base_url)
 
-    content = stream.readlines()
-
-    for line in content:
-        if "var sta_dataTable" in line:
+    ex_data = ""
+    for line in data:
+        if "sta_dataTable" in line :
+            LIST_FOUND = True
             json_array = line.split("=")[1]
             json_array = json_array.replace(";", "")
-            return json.loads(json_array)
+            ex_data += (json_array)
+        elif LIST_FOUND and not FINISHED_READING:
+
+            if "]]" in line:
+                end_index = line.index("]]")
+                ex_data += (line[:end_index])
+                FINISHED_READING = True
+                return create_list(ex_data)
+            else:
+                ex_data += line
+
+
+
+
+    raise RuntimeError("No data found")
 
 
 def unique_filter(func):
