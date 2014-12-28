@@ -53,7 +53,7 @@ def get_lotto_numbers():
     if game == "lotto":
         permutations = extract(7, resolution, start_date, end_date, url_map.get(game), most_common=most)
     elif game == "viking_lotto":
-        permutations = extract(6, resolution, start_date, end_date, url_map.get(game), most_common=most)
+        permutations = extract(6, resolution-1, start_date, end_date, url_map.get(game), most_common=most)
     else:
         permutations = extract(7, resolution, start_date, end_date, url_map.get(game), most_common=most)
 
