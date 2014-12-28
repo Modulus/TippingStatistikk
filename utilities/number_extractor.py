@@ -45,8 +45,8 @@ def read_lists(start_date, end_date, url):
     The third array is how many times this number has been additional numbers
     """
 
-    LIST_FOUND = False
-    FINISHED_READING = False
+    list_found = False
+    finished_reading = False
 
     if start_date and type(start_date) != datetime:
         start = datetime.fromtimestamp(mktime(start_date))
@@ -54,7 +54,6 @@ def read_lists(start_date, end_date, url):
     elif start_date and type(start_date) == datetime:
         start = start_date
         end = end_date
-
 
     start_date_string = "{0}.{1}.{2}".format(start.day, start.month, start.year)
     end_date_string = "{0}.{1}.{2}".format(end.day, end.month, end.year)
@@ -65,23 +64,20 @@ def read_lists(start_date, end_date, url):
 
     ex_data = ""
     for line in data:
-        if "sta_dataTable" in line :
-            LIST_FOUND = True
+        if "sta_dataTable" in line:
+            list_found = True
             json_array = line.split("=")[1]
             json_array = json_array.replace(";", "")
             ex_data += (json_array)
-        elif LIST_FOUND and not FINISHED_READING:
+        elif list_found and not finished_reading:
 
             if "]]" in line:
                 end_index = line.index("]]")
                 ex_data += (line[:end_index])
-                FINISHED_READING = True
+                finished_reading = True
                 return create_list(ex_data)
             else:
                 ex_data += line
-
-
-
 
     raise RuntimeError("No data found")
 
@@ -122,6 +118,7 @@ def extract_most_common(amount, start_date, end_date, url):
         return [e[0] for e in counter.most_common(amount)]
     else:
         return []
+
 
 def extract_least_common(amount, start_date, end_date, url):
     """This function will extract all the least picked numbers for the given url, start and end date"""
