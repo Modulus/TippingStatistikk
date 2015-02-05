@@ -48,8 +48,14 @@ def get_lotto_numbers():
         resolution = 9
     elif resolution_text == "high":
         resolution = 10
+    permutations = []
 
-    permutations = extract(7, resolution, start_date, end_date, url_map.get(game), most_common=most)
+    if game == "lotto":
+        permutations = extract(7, resolution, start_date, end_date, url_map.get(game), most_common=most)
+    elif game == "viking_lotto":
+        permutations = extract(6, resolution-1, start_date, end_date, url_map.get(game), most_common=most)
+    else:
+        permutations = extract(7, resolution, start_date, end_date, url_map.get(game), most_common=most)
 
     permutations.sort()
 

@@ -61,6 +61,7 @@ var app = (function(app){
                 $("#mostButton").prop("disabled", false);
                 $("#leastButton").prop("disabled", false);
                 $("#clearButton").prop("disabled", false);
+                $("#numberTable tr:odd").addClass("odd")
             })
         };
     };
