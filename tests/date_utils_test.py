@@ -27,5 +27,16 @@ class MainTests(TestCase):
         self.assertEquals(2016, dates[7].year)
         self.assertEquals(2022, dates[8].year)
 
+    def test_saturday(self):
+        saturday = datetime.date(datetime(2015, 7, 25))
+
+        self.assertEquals(6, saturday.isoweekday())
+
+    def test_get_all_saturdays(self):
+        days = date_utils.get_saturdays()
+        self.assertIsNotNone(days)
+        self.assertTrue(len(days) >= 1248)
+        for day in days:
+            self.assertEqual(day.isoweekday(), 6, "A date that is not a saturday is present")
 
 
